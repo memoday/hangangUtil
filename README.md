@@ -7,14 +7,14 @@ temp.txt 파일로 옮김
 
 
 //
-pip install openpyxl
+pip install openpyxl<br>
 
 pyinstaller -w -F <filename>
 
 
 
 
-2022.10.05\n
-\xa0 에러 수정\n
-for문 안에 조건식 추가\n
-엑셀 사용 편의성 확대\n
+2022.10.05<br>
+\xa0 에러 수정<br>
+for문 안에 조건식 추가<br>
+엑셀 사용 편의성 확대<br>
