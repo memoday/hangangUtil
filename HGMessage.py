@@ -11,10 +11,10 @@ sheet2 = read_xlsx.get_sheet_by_name("paper")
 settings = read_xlsx.get_sheet_by_name("settings")
 settings_time = settings.cell(row=1, column=2) #시간(시) 설정 column
 
-news_number = 1
+news_number = 0
 team = "-문화홍보과-"
 
-#보도시간 자동설정, 오전 11시이전 실행시 09시
+#보도시간 자동설정, 정오이전 실행시 09시 설정
 if hours <= 12:
    settings_time.value = "09"
 else :
@@ -37,7 +37,7 @@ def sortInternet ():
 
 def sorting(sheetCol, sheetName, category):
     global news_number
-    names1 = []
+    rows = []
     col = []
     internet = []
     check = 0
@@ -50,18 +50,22 @@ def sorting(sheetCol, sheetName, category):
         row = sheetName[i]
         for cell in row:
             if cell.value != None: #NoneType값은 append에서 제외됨
-                names1.append(cell.value) #행 데이터 names1에 저장
-            if names1:
+                rows.append(cell.value) #행 데이터 rows에 저장
+            if rows:
                 if check == 0:
                     print (category)
                     check = check + 1
-        internet.append(str(names1[2]+'('+names1[1]+'_'+names1[3]+')\n'+names1[4]+'\n'))
+        internet.append(str(rows[2]+'('+rows[1]+'_'+rows[3]+')\n'+rows[4]+'\n'))
         internet[i-1] = internet[i-1].replace(u'\xa0',u' ') #\xa0 에러 방지
-        names1 = []
-        print(str(news_number)+'.'+internet[i-1])
+        rows = []
         news_number = news_number + 1
+        print(str(news_number)+'.'+internet[i-1])
+    if news_number == 0:
+        print("오늘 보도사항은 없습니다.\n")
+        news_number += 1
         
 if __name__ == "__main__":
+    print("\n잠시만 기다려주세요..\n")
     sys.stdout = open('temp.txt','w') #결과값 txt파일로 내보내기       
     print("금일("+today+") "+report_time+"시까지 한강관련주요 보도사항입니다.\n")
     sortPaper()
