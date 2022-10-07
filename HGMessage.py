@@ -60,9 +60,6 @@ def sorting(sheetCol, sheetName, category):
         rows = []
         news_number = news_number + 1
         print(str(news_number)+'.'+internet[i-1])
-    if news_number == 0:
-        print("오늘 보도사항은 없습니다.\n")
-        news_number += 1
         
 if __name__ == "__main__":
     print("\n잠시만 기다려주세요..\n")
@@ -70,5 +67,7 @@ if __name__ == "__main__":
     print("금일("+today+") "+report_time+"시까지 한강관련주요 보도사항입니다.\n")
     sortPaper()
     sortInternet()
+    if news_number == 0:
+        print("오늘 보도사항은 없습니다.\n")
     print(team) 
     os.startfile('temp.txt')
