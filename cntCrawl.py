@@ -7,13 +7,15 @@ from bs4 import BeautifulSoup
 import pyperclip
 import re
 from PyQt5.QtGui import *
+import urllib.request
 
 
 form_class = uic.loadUiType("main.ui")[0]
 print("프로그램이 구동됩니다.")
 
 def get_real_url_from_shortlink(url): #단축링크 원본링크로 변경
-    resp = requests.get(url)
+    resp = requests.get(url,headers={'User-Agent':'Mozilla/5.0'})
+    print(resp.url)
     return resp.url
 
 def checkNews(url) -> tuple : #언론사별 selector
