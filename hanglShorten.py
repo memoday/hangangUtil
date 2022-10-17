@@ -2,7 +2,7 @@ import requests
 import json
 
 headers = {
-    'Authorization': 'Bearer 06e325d393d2807edd1bcb9aa229ce28',
+    'Authorization': 'Bearer 06e325d393d2807edd1bcb9aa229ce28', #han.gl 개발자 도구 curl 참고
     'Content-Type': 'application/json',
 }
 
@@ -15,8 +15,10 @@ def hanglShorten(longUrl):
         else:
             jsonObject = json.loads(response.text)
             print('\n===링크 단축 성공===')
-            shortUrl = jsonObject.get("shorturl")
+            shortUrl = jsonObject.get("shorturl") #Server Response에서 shorturl을 불러옴
             print(shortUrl)
             return shortUrl
     if response.status_code == 403:
         print('Error Code: 403')
+    if response.status_code == 400:
+        print('Error Code: 400')

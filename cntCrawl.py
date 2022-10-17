@@ -9,6 +9,7 @@ from PyQt5.QtGui import *
 import hanglShorten as hgs
 import os
 
+
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -16,9 +17,9 @@ def resource_path(relative_path):
     
 icon = resource_path('HGM.ico')
 form = resource_path('main.ui')
+
 form_class = uic.loadUiType(form)[0]
 print("프로그램이 구동됩니다.")
-
 
 def get_real_url_from_shortlink(url): #단축링크 원본링크로 변경
     resp = requests.get(url,headers={'User-Agent':'Mozilla/5.0'})
@@ -55,18 +56,23 @@ class WindowClass(QMainWindow, form_class) :
         super().__init__()
         self.setupUi(self)
 
-        self.statusBar().showMessage('프로그램 구동 중')
+        self.statusBar().showMessage('프로그램 정상 구동 중')
 
         #버튼에 기능을 연결하는 코드
         self.setWindowIcon(QIcon(icon))
-        self.setWindowTitle('HG 기사내용 크롤링')
+        self.setWindowTitle('HGA: Article Crawling')
         self.btn_ok.clicked.connect(self.runCrawl)
         self.input_link.returnPressed.connect(self.runCrawl)
         self.btn_exit.clicked.connect(self.exit)
         self.input_link.setFocus() #프로그램 실행시 input_link 자동 선택
+        self.btn_shortenUrl.clicked.connect(self.shortenUrl)
 
     def exit(self) :
         sys.exit(0)
+    
+    def shortenUrl(self) :
+        url = self.input_link.text()
+        self.output_2.setText(hgs.hanglShorten(url))
 
     def runCrawl(self):
         global output
