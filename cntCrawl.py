@@ -7,9 +7,16 @@ import pyperclip
 import re
 from PyQt5.QtGui import *
 import hanglShorten as hgs
+import os
 
-
-form_class = uic.loadUiType("main.ui")[0]
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+    
+icon = resource_path('HGM.ico')
+form = resource_path('main.ui')
+form_class = uic.loadUiType(form)[0]
 print("프로그램이 구동됩니다.")
 
 
@@ -51,7 +58,7 @@ class WindowClass(QMainWindow, form_class) :
         self.statusBar().showMessage('프로그램 구동 중')
 
         #버튼에 기능을 연결하는 코드
-        self.setWindowIcon(QIcon('HGM.ico'))
+        self.setWindowIcon(QIcon(icon))
         self.setWindowTitle('HG 기사내용 크롤링')
         self.btn_ok.clicked.connect(self.runCrawl)
         self.input_link.returnPressed.connect(self.runCrawl)
