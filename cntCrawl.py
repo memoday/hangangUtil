@@ -1,16 +1,17 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
-from numpy import imag
 import requests
 from bs4 import BeautifulSoup
 import pyperclip
 import re
 from PyQt5.QtGui import *
+import hanglShorten as hgs
 
 
 form_class = uic.loadUiType("main.ui")[0]
 print("프로그램이 구동됩니다.")
+
 
 def get_real_url_from_shortlink(url): #단축링크 원본링크로 변경
     resp = requests.get(url,headers={'User-Agent':'Mozilla/5.0'})
@@ -47,18 +48,20 @@ class WindowClass(QMainWindow, form_class) :
         super().__init__()
         self.setupUi(self)
 
+        self.statusBar().showMessage('프로그램 구동 중')
+
         #버튼에 기능을 연결하는 코드
         self.setWindowIcon(QIcon('HGM.ico'))
-        self.btn_ok.clicked.connect(self.naverSort)
-        self.btn_reset.clicked.connect(self.reset)
-        self.input_link.returnPressed.connect(self.naverSort)
-        self.btn_copy.clicked.connect(self.copy)
+        self.setWindowTitle('HG 기사내용 크롤링')
+        self.btn_ok.clicked.connect(self.runCrawl)
+        self.input_link.returnPressed.connect(self.runCrawl)
+        self.btn_exit.clicked.connect(self.exit)
+        self.input_link.setFocus() #프로그램 실행시 input_link 자동 선택
 
-    def reset(self) :
-        self.input_link.setText("")
-        self.output.setText("")
+    def exit(self) :
+        sys.exit(0)
 
-    def naverSort(self):
+    def runCrawl(self):
         global output
         try:
             url = self.input_link.text()
@@ -71,17 +74,24 @@ class WindowClass(QMainWindow, form_class) :
             to_clean = re.compile('<.*?>') # <> 사이에 있는 것들
             contentOut = re.sub(to_clean,'',contentStr) #html태그 모두 지우기
 
+            self.statusBar().showMessage('로딩 중')
             print(title+"\n"+press+" "+date+"\n"+contentOut)
             output = title+"\n"+press+" "+date+"\n"+contentOut
+            output_2 = title+"\n"+hgs.hanglShorten(url) #단축된 링크로 제공
 
             self.output.setText(output)
+            self.output_2.setText(output_2)
+            self.output_3.setText(press)
+            self.statusBar().showMessage('인식된 언론사: '+press)
             print(self.output.toPlainText())
+            
         except AttributeError:
-            print("내용을 찾을 수 없습니다. 네이버 뉴스 기사가 맞는지 다시 확인해주세요.")
-            self.output.setText("내용을 찾을 수 없습니다. 네이버 뉴스 기사가 맞는지 다시 확인해주세요.")
+            print("호환되지 않는 기사 링크입니다.")
+            self.output.setText("호환되지 않는 기사 링크입니다.")
         except Exception :
             print("알 수 없는 이유로 실패했습니다")
             self.output.setText("알 수 없는 이유로 실패했습니다")
+            
 
     def copy(self):
         content = self.output.toPlainText()

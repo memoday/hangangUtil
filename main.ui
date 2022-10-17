@@ -1,106 +1,253 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>cntCrawl</class>
- <widget class="QDialog" name="cntCrawl">
+ <class>Dialog</class>
+ <widget class="QDialog" name="Dialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
     <width>747</width>
-    <height>366</height>
+    <height>478</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_2">
-   <item>
-    <widget class="QTextBrowser" name="output">
-     <property name="font">
-      <font>
-       <family>맑은 고딕</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="html">
-      <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+  <widget class="QPushButton" name="btn_ok">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>370</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>확인</string>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="output">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>50</y>
+     <width>381</width>
+     <height>391</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>맑은 고딕</family>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="cursor" stdset="0">
+    <cursorShape>IBeamCursor</cursorShape>
+   </property>
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="html">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
-&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'맑은 고딕'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'맑은 고딕'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;복사할 내용 미리보기&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLabel" name="label">
-     <property name="font">
-      <font>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string>네이버뉴스 링크 입력</string>
-     </property>
-     <property name="textFormat">
-      <enum>Qt::AutoText</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QLineEdit" name="input_link">
-     <property name="font">
-      <font>
-       <family>맑은 고딕</family>
-       <pointsize>10</pointsize>
-      </font>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="frame">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btn_copy">
-     <property name="toolTip">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;미리보기의 내용을 복사합니다&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>복사</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btn_ok">
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>확인</string>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QPushButton" name="btn_reset">
-     <property name="autoFillBackground">
-      <bool>false</bool>
-     </property>
-     <property name="text">
-      <string>초기화</string>
-     </property>
-    </widget>
-   </item>
-  </layout>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="input_link">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>320</y>
+     <width>271</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>맑은 고딕</family>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="contextMenuPolicy">
+    <enum>Qt::PreventContextMenu</enum>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="frame">
+    <bool>true</bool>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>290</y>
+     <width>181</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>굴림</family>
+     <pointsize>7</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>뉴스 링크 입력</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::AutoText</enum>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="output_2">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>50</y>
+     <width>271</width>
+     <height>91</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>맑은 고딕</family>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="cursor" stdset="0">
+    <cursorShape>IBeamCursor</cursorShape>
+   </property>
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="html">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'맑은 고딕'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&amp;lt;기사 제목&amp;gt;&lt;/p&gt;
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&amp;lt;han.gl&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QTextBrowser" name="output_3">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>200</y>
+     <width>271</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>맑은 고딕</family>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="cursor" stdset="0">
+    <cursorShape>IBeamCursor</cursorShape>
+   </property>
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="html">
+    <string>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'맑은 고딕'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>170</y>
+     <width>181</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>굴림</family>
+     <pointsize>7</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>언론사</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::AutoText</enum>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>20</y>
+     <width>181</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>굴림</family>
+     <pointsize>7</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>기사제목 &amp; 단축링크</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::AutoText</enum>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_exit">
+   <property name="geometry">
+    <rect>
+     <x>620</x>
+     <y>370</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>종료</string>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_4">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>20</y>
+     <width>181</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>굴림</family>
+     <pointsize>7</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>기사 내용</string>
+   </property>
+   <property name="textFormat">
+    <enum>Qt::AutoText</enum>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
