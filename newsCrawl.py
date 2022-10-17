@@ -2,65 +2,65 @@ import requests
 from bs4 import BeautifulSoup
 from openpyxl import Workbook
 
-wb = Workbook()
-ws1 = wb.active
+def getAttribute(articleIndex):
+    if (articles[articleIndex].select_one("div.info_group > span:nth-child(2) > i.spnew.ico_paper")):
+        return "신문"
+    elif not(str(articles[articleIndex]).find("api_ico_svideo") == -1): #svideo는 select_one태그로 찾아지지 않음
+        return "방송"
+    else:
+        return "인터넷"
 
-def croll():
+def getContents(articleIndex) -> tuple:
+    title = articles[articleIndex].select_one("a.news_tit").text
+    source = articles[articleIndex].select_one("a.info.press").text.replace("언론사 선정","") #언론사 PICK태그에 #text '언론사 선정' 제거
+    sum = articles[articleIndex].select_one("a.api_txt_lines.dsc_txt_wrap").text
+    nlink = articles[articleIndex].select_one("a.news_tit")["href"]
 
-    keyword = '한강'
-    currentPage = 0
-    ds = "2022.10.12" #from date(ds)
-    de = "2022.10.12" #to date(de)
-    sort = "2" #오래된 순: 2
-    pd = "3" #기간검색: 3
+    return title, source, sum, nlink
+
+
+def main():
+    setting = {
+        "searchKeyword" : '한강', #검색 키워드
+        "dateStart" : "2022.10.16", #from date(ds)
+        "dateEnd" : "2022.10.16", #to date(de)
+        'sort': "2", #오래된 순: 2
+        'period': "3" #기간검색: 3  
+    }
     
-    lastPage = 1
-    
+    page = 0
     # ws1.append(["일","언론사","기사제목","업태","미리보기","기사 주소"])
-    while currentPage < lastPage:
-        i = 0
-        raw = requests.get("https://search.naver.com/search.naver?where=news&query="+keyword+"&sm=tab_opt&sort="+sort+"&photo=0&field=0&pd="+pd+"&ds="+ds+"&de="+de+"&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=1&start="+str(currentPage)+"1",
-                    headers={'User-Agent':'Mozilla/5.0'})
+    while True:
+        newsURL = "https://search.naver.com/search.naver?where=news&query="+setting['searchKeyword']+"&sm=tab_opt&sort="+setting['sort']+"&photo=0&field=0&pd="+setting['period']+"&ds="+setting['dateStart']+"&de="+setting['dateEnd']+"&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=1&start="+str(page)+"1"
+        
+        raw = requests.get(newsURL, headers={'User-Agent':'Mozilla/5.0'})
         html = BeautifulSoup(raw.text, "html.parser")
+
+        checkNextPage = html.select_one('a.btn_next')["aria-disabled"]
+        if checkNextPage == "false":
+            print(page+1,"번째 페이지입니다.\n")
+        else:
+            print(page+1,"번째 마지막 페이지입니다.")
+
+        global articles
         articles = html.select("ul.list_news > li")
         try: 
-            while i < 10:
-                checkResult = None
-                try:
-                    if (articles[i].select_one("i.spnew.ico_paper").text): 
-                        checkResult = "신문"
-                except: 
-                    pass
-                try:
-                    if (articles[i].select_one("i.spnew.api_ico_svideo").text): 
-                        checkResult = "방송"
-                except AttributeError:
-                    checkResult = "인터넷"
-                title = articles[i].select_one("a.news_tit").text
-                source = articles[i].select_one("a.info.press").text
-                sum = articles[i].select_one("a.api_txt_lines.dsc_txt_wrap").text
-                nlink = articles[i].select_one("a.news_tit")["href"]
+            for articleIndex in range(10):
+                attribute = getAttribute(articleIndex)
+                title, source, sum, nlink = getContents(articleIndex)
 
-                source = source.replace("언론사 선정","")
-                print(checkResult)
-                print(source)
-                print(title)
-                print(sum)
-                print(nlink)
-                print('\n')
+                data = [setting['dateStart'], source, title, attribute, sum, nlink]
+                print(attribute, '\n', source, '\n', title, '\n\n', sum, '\n', nlink, '\n')
 
-                ws1.append([ds,source,title,checkResult,sum,nlink])
-                i += 1
+                ws1.append(data)
+            page += 1
 
-            currentPage = currentPage +1
-            if html.select_one('a.btn_next')["aria-disabled"] == "true":
-                print("마지막 페이지입니다.")
-            else:
-                lastPage = lastPage + 1
-                print(lastPage,"번째 페이지입니다.\n")
         except IndexError:
             print("마지막 기사입니다.")
+            wb.save(filename='crawlResult.xlsx')
             break
-        wb.save(filename='crawlResult.xlsx')
-        
-croll()
+
+if __name__ == "__main__":
+    wb = Workbook()
+    ws1 = wb.active
+    main()

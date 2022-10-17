@@ -7,7 +7,6 @@ from bs4 import BeautifulSoup
 import pyperclip
 import re
 from PyQt5.QtGui import *
-import urllib.request
 
 
 form_class = uic.loadUiType("main.ui")[0]
@@ -46,7 +45,7 @@ class WindowClass(QMainWindow, form_class) :
 
     def __init__(self) :
         super().__init__()
-        self.setupUi(self)     
+        self.setupUi(self)
 
         #버튼에 기능을 연결하는 코드
         self.setWindowIcon(QIcon('HGM.ico'))
@@ -58,7 +57,6 @@ class WindowClass(QMainWindow, form_class) :
     def reset(self) :
         self.input_link.setText("")
         self.output.setText("")
-
 
     def naverSort(self):
         global output
