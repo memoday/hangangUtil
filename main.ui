@@ -170,7 +170,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="font">
     <font>
-     <family>맑은 고딕</family>
+     <family>굴림</family>
      <pointsize>9</pointsize>
     </font>
    </property>
@@ -253,7 +253,7 @@ p, li { white-space: pre-wrap; }
    </property>
    <property name="font">
     <font>
-     <family>맑은 고딕</family>
+     <family>굴림</family>
      <pointsize>9</pointsize>
     </font>
    </property>

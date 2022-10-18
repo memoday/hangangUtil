@@ -1,4 +1,5 @@
 import sys
+from turtle import clear
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 import requests
@@ -80,7 +81,6 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_copyPress.clicked.connect(self.copyPress)
         self.btn_copyOutput.clicked.connect(self.copyOutput)
         
-
         #기타
         self.input_link.setFocus() #프로그램 실행시 input_link 자동 선택
 
@@ -90,6 +90,7 @@ class WindowClass(QMainWindow, form_class) :
     def shortenUrl(self) :
         url = self.input_link.text()
         self.output_2.setText(hgs.hanglShorten(url))
+        self.statusBar().showMessage('링크 단축 성공')
 
     def runCrawl(self):
         global output, press
@@ -106,7 +107,6 @@ class WindowClass(QMainWindow, form_class) :
                 to_clean = re.compile('<.*?>') # <> 사이에 있는 것들
                 contentOut = re.sub(to_clean,'',contentStr) #html태그 모두 지우기
 
-                self.statusBar().showMessage('로딩 중') #작동 안함
                 print(title+"\n"+press+" "+date+"\n"+contentOut)
                 output = title+"\n"+press+" "+date+"\n"+contentOut
                 output_2 = title+"\n"+hgs.hanglShorten(url) #단축된 링크로 제공
@@ -128,13 +128,16 @@ class WindowClass(QMainWindow, form_class) :
     def copyOutput(self):
         content = self.output.toPlainText()
         pyperclip.copy(content)
+        self.statusBar().showMessage('본문 복사 성공')
 
     def copyOutput2(self):
         content = self.output_2.toPlainText()
         pyperclip.copy(content)
+        self.statusBar().showMessage('제목&링크 복사 성공')
     def copyPress(self):
         try:
             pyperclip.copy(press)
+            self.statusBar().showMessage('언론사 복사 성공')
         except NameError:
             self.output.setText('복사할 내용이 없습니다.')
 
