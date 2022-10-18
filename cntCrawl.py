@@ -46,6 +46,14 @@ def checkNews(url) -> tuple : #언론사별 selector
         content = source.select_one("#newsEndContents")
         date = source.select_one("#content > div > div.content > div > div.news_headline > div > span:nth-child(1)").text
 
+    if "newspim.com" in url: #뉴스핌
+        print('newspim checked')
+        title = source.select_one("#main-title").text
+        press = "뉴스핌"
+        content = source.select_one("#wrap > div.container.subwrap > div > div:nth-child(2) > div.left > div > div.contents")
+        date = source.select_one("#send-time").text
+        date = date.replace("년",".").replace("월",".").replace("일","")
+
     else:
         print("호환되지 않는 언론사입니다")
     return title,press,content,date
@@ -60,7 +68,7 @@ class WindowClass(QMainWindow, form_class) :
 
         #버튼에 기능을 연결하는 코드
         self.setWindowIcon(QIcon(icon))
-        self.setWindowTitle('HGA: Article Crawling')
+        self.setWindowTitle('HGA')
         self.btn_ok.clicked.connect(self.runCrawl)
         self.input_link.returnPressed.connect(self.runCrawl)
         self.btn_exit.clicked.connect(self.exit)
@@ -87,7 +95,7 @@ class WindowClass(QMainWindow, form_class) :
             to_clean = re.compile('<.*?>') # <> 사이에 있는 것들
             contentOut = re.sub(to_clean,'',contentStr) #html태그 모두 지우기
 
-            self.statusBar().showMessage('로딩 중')
+            self.statusBar().showMessage('로딩 중') #작동 안함
             print(title+"\n"+press+" "+date+"\n"+contentOut)
             output = title+"\n"+press+" "+date+"\n"+contentOut
             output_2 = title+"\n"+hgs.hanglShorten(url) #단축된 링크로 제공
@@ -99,12 +107,11 @@ class WindowClass(QMainWindow, form_class) :
             print(self.output.toPlainText())
             
         except AttributeError:
-            print("호환되지 않는 기사 링크입니다.")
-            self.output.setText("호환되지 않는 기사 링크입니다.")
+            self.output.setText("호환되지 않는 링크입니다.")
+            self.statusBar().showMessage('호환되지 않는 링크입니다.')
         except Exception :
-            print("알 수 없는 이유로 실패했습니다")
             self.output.setText("알 수 없는 이유로 실패했습니다")
-            
+            self.statusBar().showMessage('Exception Error')
 
     def copy(self):
         content = self.output.toPlainText()
