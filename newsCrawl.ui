@@ -69,11 +69,11 @@
     <number>24</number>
    </property>
   </widget>
-  <widget class="QDateEdit" name="dateEdit">
+  <widget class="QDateEdit" name="dateStart">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>60</y>
+     <x>590</x>
+     <y>210</y>
      <width>110</width>
      <height>22</height>
     </rect>
@@ -98,8 +98,8 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>580</x>
-     <y>40</y>
+     <x>590</x>
+     <y>190</y>
      <width>71</width>
      <height>16</height>
     </rect>
@@ -121,11 +121,11 @@
     <string>엑셀로 내보내기</string>
    </property>
   </widget>
-  <widget class="QDateEdit" name="dateEdit_2">
+  <widget class="QDateEdit" name="dateEnd">
    <property name="geometry">
     <rect>
-     <x>710</x>
-     <y>60</y>
+     <x>720</x>
+     <y>210</y>
      <width>110</width>
      <height>22</height>
     </rect>
@@ -145,6 +145,67 @@
    </property>
    <property name="timeSpec">
     <enum>Qt::LocalTime</enum>
+   </property>
+  </widget>
+  <widget class="QTextEdit" name="input_keyword">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>50</y>
+     <width>221</width>
+     <height>31</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="label_2">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>20</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>검색 키워드</string>
+   </property>
+  </widget>
+  <widget class="QComboBox" name="comboBox">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>130</y>
+     <width>91</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <item>
+    <property name="text">
+     <string>관련도순</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>최신순</string>
+    </property>
+   </item>
+   <item>
+    <property name="text">
+     <string>오래된순</string>
+    </property>
+   </item>
+  </widget>
+  <widget class="QLabel" name="label_3">
+   <property name="geometry">
+    <rect>
+     <x>590</x>
+     <y>110</y>
+     <width>71</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>정렬</string>
    </property>
   </widget>
  </widget>

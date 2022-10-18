@@ -4,7 +4,7 @@
 block_cipher = None
 
 
-a = Analysis(['cntCrawl.py','P:\HangangUtil\hanglShorten.py'],
+a = Analysis(['HGA.py','P:\HangangUtil\hanglShorten.py'],
              pathex=[],
              binaries=[],
              datas=[

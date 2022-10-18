@@ -1,8 +1,19 @@
 import openpyxl
 import requests
 from bs4 import BeautifulSoup
-from openpyxl import workbook
 import datetime
+
+
+def getDate() -> tuple:
+    print('날짜 기간을 입력해주세요 dateStart')
+    dsY,dsM,dsD = map(int,input("시작 년.월.일을 입력해주세요(2022.10.12)").split('.'))
+    dateStart = datetime.datetime(dsY,dsM,dsD)
+    deY,deM,deD = map(int,input("종료 년.월.일을 입력해주세요(2022.10.12)").split('.'))
+    dateEnd = datetime.datetime(deY,deM,deD)
+
+    rawDays = dateEnd - dateStart
+    rangeDays = rawDays.days
+    return dateStart, rangeDays
 
 def getAttribute(articleIndex):
     if (articles[articleIndex].select_one("div.info_group > span:nth-child(2) > i.spnew.ico_paper")):
@@ -20,13 +31,14 @@ def getContents(articleIndex) -> tuple:
 
     return title, source, sum, nlink
 
-def crawl(dateStart):
+def crawl(searchKeyword, dateStart, sort):
     setting = {
-        "searchKeyword" : '한강', #검색 키워드
+        "searchKeyword" : searchKeyword, #검색 키워드
         "dateStart" : dateStart, #from date(ds)
         "dateEnd" : dateStart, #to date(de)
-        'sort': "2", #오래된 순: 2
-        'period': "3" #기간검색: 3  
+        'sort': sort, #오래된 순: 2 #최신 순: 1 #관련도 순: 0
+        'period': "3" #사용자 설정 기간검색: 3  
+        #전체: 0, 1시간~6시간: 7~12, 1일: 4, 1주: 1, 1개월: 2, 3개월: 13, 6개월: 6, 1년: 5
     }
     
     page = 0
@@ -61,28 +73,27 @@ def crawl(dateStart):
             wb.save('crawlResult.xlsx')
             break
 
-def main ():
-    print('날짜 기간을 입력해주세요 dateStart')
-    dsY,dsM,dsD = map(int,input("시작 년.월.일을 입력해주세요(2022.10.12)").split('.'))
-    dateStart = datetime.datetime(dsY,dsM,dsD)
-    deY,deM,deD = map(int,input("종료 년.월.일을 입력해주세요(2022.10.12)").split('.'))
-    dateEnd = datetime.datetime(deY,deM,deD)
-
-    rawDays = dateEnd - dateStart
-    rangeDays = rawDays.days
-    print(rangeDays+1)
+def main():
+    dateStart, rangeDays = getDate()
     i = 0
+
+    searchKeyword = "한강"
+    sort = '2'
+
     for i in range(rangeDays+1):
+        #기간 검색시 최근 기사의 작성날짜 정보를 불러오지 못해 rangeDays만큼 crawl()를 반복시킴
         urlDays = dateStart+ datetime.timedelta(days= i)
         urlDays = str(urlDays.strftime('%Y.%m.%d'))
-        crawl(urlDays)
+        crawl(searchKeyword, urlDays, sort)
         i += 1
 
 
 if __name__ == "__main__":
     try:
+        print('crawlResult.xlsx 파일이 확인되었습니다')
         wb = openpyxl.load_workbook('crawlResult.xlsx')
     except FileNotFoundError:
+        print('FileNotFound: crawlResult.xlsx을 찾지 못해 새로 생성합니다.')
         wb = openpyxl.Workbook()
     ws1 = wb.active
     main()

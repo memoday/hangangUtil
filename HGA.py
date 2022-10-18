@@ -64,16 +64,25 @@ class WindowClass(QMainWindow, form_class) :
         super().__init__()
         self.setupUi(self)
 
-        self.statusBar().showMessage('프로그램 정상 구동 중')
 
-        #버튼에 기능을 연결하는 코드
+        #프로그램 기본설정
+        self.statusBar().showMessage('프로그램 정상 구동 중')
         self.setWindowIcon(QIcon(icon))
         self.setWindowTitle('HGA')
+
+        #버튼에 기능을 연결하는 코드
         self.btn_ok.clicked.connect(self.runCrawl)
         self.input_link.returnPressed.connect(self.runCrawl)
         self.btn_exit.clicked.connect(self.exit)
-        self.input_link.setFocus() #프로그램 실행시 input_link 자동 선택
         self.btn_shortenUrl.clicked.connect(self.shortenUrl)
+
+        self.btn_copyOutput2.clicked.connect(self.copyOutput2)
+        self.btn_copyPress.clicked.connect(self.copyPress)
+        self.btn_copyOutput.clicked.connect(self.copyOutput)
+        
+
+        #기타
+        self.input_link.setFocus() #프로그램 실행시 input_link 자동 선택
 
     def exit(self) :
         sys.exit(0)
@@ -83,39 +92,51 @@ class WindowClass(QMainWindow, form_class) :
         self.output_2.setText(hgs.hanglShorten(url))
 
     def runCrawl(self):
-        global output
-        try:
-            url = self.input_link.text()
-            
-            title, press, content, date = checkNews(url)
+        global output, press
+        if self.input_link.text() != "":
+            try:
+                url = self.input_link.text()
+                
+                title, press, content, date = checkNews(url)
+                self.statusBar().showMessage('인식된 언론사: '+press)
 
-            contentStr = str(content).replace('<br/>','\n') #<br>태그 Enter키로 변경
-            contentStr = str(contentStr).replace('</table>','\n') #이미지 부연설명 내용과 분리
-            contentStr = contentStr.replace('</img>','[사진]\n') #이미지 위치 확인
-            to_clean = re.compile('<.*?>') # <> 사이에 있는 것들
-            contentOut = re.sub(to_clean,'',contentStr) #html태그 모두 지우기
+                contentStr = str(content).replace('<br/>','\n') #<br>태그 Enter키로 변경
+                contentStr = str(contentStr).replace('</table>','\n') #이미지 부연설명 내용과 분리
+                contentStr = contentStr.replace('</img>','[사진]\n') #이미지 위치 확인
+                to_clean = re.compile('<.*?>') # <> 사이에 있는 것들
+                contentOut = re.sub(to_clean,'',contentStr) #html태그 모두 지우기
 
-            self.statusBar().showMessage('로딩 중') #작동 안함
-            print(title+"\n"+press+" "+date+"\n"+contentOut)
-            output = title+"\n"+press+" "+date+"\n"+contentOut
-            output_2 = title+"\n"+hgs.hanglShorten(url) #단축된 링크로 제공
+                self.statusBar().showMessage('로딩 중') #작동 안함
+                print(title+"\n"+press+" "+date+"\n"+contentOut)
+                output = title+"\n"+press+" "+date+"\n"+contentOut
+                output_2 = title+"\n"+hgs.hanglShorten(url) #단축된 링크로 제공
 
-            self.output.setText(output)
-            self.output_2.setText(output_2)
-            self.output_3.setText(press)
-            self.statusBar().showMessage('인식된 언론사: '+press)
-            print(self.output.toPlainText())
-            
-        except AttributeError:
-            self.output.setText("호환되지 않는 링크입니다.")
-            self.statusBar().showMessage('호환되지 않는 링크입니다.')
-        except Exception :
-            self.output.setText("알 수 없는 이유로 실패했습니다")
-            self.statusBar().showMessage('Exception Error')
+                self.output.setText(output)
+                self.output_2.setText(output_2)
+                print(self.output.toPlainText())
+                
+            except AttributeError:
+                print(AttributeError)
+                self.output.setText("호환되지 않는 링크입니다.")
+                self.statusBar().showMessage('호환되지 않는 링크입니다.')
+            except Exception :
+                self.output.setText("알 수 없는 이유로 실패했습니다")
+                self.statusBar().showMessage('Exception Error')
+        else:
+            self.output.setText('링크를 입력해주세요')
 
-    def copy(self):
+    def copyOutput(self):
         content = self.output.toPlainText()
         pyperclip.copy(content)
+
+    def copyOutput2(self):
+        content = self.output_2.toPlainText()
+        pyperclip.copy(content)
+    def copyPress(self):
+        try:
+            pyperclip.copy(press)
+        except NameError:
+            self.output.setText('복사할 내용이 없습니다.')
 
 if __name__ == "__main__":
     app = QApplication(sys.argv) 
