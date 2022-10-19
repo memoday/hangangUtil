@@ -53,7 +53,7 @@ def getContents(articleIndex) -> tuple:
 
     return title, source, sum, nlink
 
-def crawl(searchKeyword, dateStart, sort):
+def crawl(searchKeyword, dateStart, sort, self):
     setting = {
         "searchKeyword" : searchKeyword, #검색 키워드
         "dateStart" : dateStart, #from date(ds)
@@ -71,7 +71,13 @@ def crawl(searchKeyword, dateStart, sort):
         raw = requests.get(newsURL, headers={'User-Agent':'Mozilla/5.0'})
         html = BeautifulSoup(raw.text, "html.parser")
 
-        checkNextPage = html.select_one('a.btn_next')["aria-disabled"]
+        try:
+            checkNextPage = html.select_one('a.btn_next')["aria-disabled"]
+        except TypeError:
+            print('관련 기사가 존재하지 않습니다')
+            self.label_main.setText("Not Found")
+            self.label_main.setStyleSheet("Color: Red")
+            break
         if checkNextPage == "false":
             print(page+1,"번째 페이지입니다.\n")
         else:
@@ -94,6 +100,8 @@ def crawl(searchKeyword, dateStart, sort):
             print("마지막 기사입니다.")
             wb.save('crawlResult.xlsx')
             break
+        self.label_main.setText("Success")
+        self.label_main.setStyleSheet("Color: Green")
 
 class WindowClass(QMainWindow, form_class):
 
@@ -129,24 +137,21 @@ class WindowClass(QMainWindow, form_class):
             dateStart = self.dateStart.date().toString('yyyy.MM.dd')
             dateEnd = self.dateEnd.date().toString('yyyy.MM.dd')
 
-            print(dateStart)
-            print(getRange(dateStart,dateEnd))
-
             rangeDays = getRange(dateStart,dateEnd)
 
             dsY,dsM,dsD = map(int,dateStart.split('.'))
             dateStart = datetime.datetime(dsY,dsM,dsD) 
             #dateStart를 str에서 datetime으로 type 변경, 날짜 계산하기 위한 과정
 
-            i = 0
-
             sort = str(self.combo_sort.currentIndex()) #combo box안에 있는 값 전달
+
+            i = 0
 
             for i in range(rangeDays+1):
                 #기간 검색시 최근 기사의 작성날짜 정보를 불러오지 못해 rangeDays만큼 crawl()를 반복시킴
                 urlDays = dateStart+ datetime.timedelta(days= i)
                 urlDays = str(urlDays.strftime('%Y.%m.%d'))
-                crawl(searchKeyword, urlDays, sort)
+                crawl(searchKeyword, urlDays, sort, self)
                 i += 1
 
     def exit(self):
