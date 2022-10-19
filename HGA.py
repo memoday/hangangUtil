@@ -10,14 +10,13 @@ from PyQt5.QtGui import *
 import hanglShorten as hgs
 import os
 
-
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
     return os.path.join(base_path, relative_path)
     
 icon = resource_path('HGM.ico')
-form = resource_path('main.ui')
+form = resource_path('HGA.ui')
 
 form_class = uic.loadUiType(form)[0]
 print("프로그램이 구동됩니다.")
@@ -67,9 +66,9 @@ class WindowClass(QMainWindow, form_class) :
 
 
         #프로그램 기본설정
-        self.statusBar().showMessage('프로그램 정상 구동 중')
         self.setWindowIcon(QIcon(icon))
         self.setWindowTitle('HGA')
+        self.statusBar().showMessage('프로그램 정상 구동 중')
 
         #버튼에 기능을 연결하는 코드
         self.btn_ok.clicked.connect(self.runCrawl)

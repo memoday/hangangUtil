@@ -8,7 +8,7 @@ a = Analysis(['HGA.py','P:\HangangUtil\hanglShorten.py'],
              pathex=[],
              binaries=[],
              datas=[
-                ('main.ui', '.'),
+                ('HGA.ui', '.'),
                 ('HGM.ico','.')
              ],
              hiddenimports=[],
