@@ -14,7 +14,7 @@ def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
     return os.path.join(base_path, relative_path)
 
-form = resource_path('HGC.ui')
+form = resource_path('ui/HGC.ui')
 icon = resource_path('HGM.ico')
 
 form_class = uic.loadUiType(form)[0]

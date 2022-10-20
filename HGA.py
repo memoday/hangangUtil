@@ -16,7 +16,7 @@ def resource_path(relative_path):
     return os.path.join(base_path, relative_path)
     
 icon = resource_path('HGM.ico')
-form = resource_path('HGA.ui')
+form = resource_path('ui/HGA.ui')
 
 form_class = uic.loadUiType(form)[0]
 print("프로그램이 구동됩니다.")

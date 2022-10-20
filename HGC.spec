@@ -8,8 +8,8 @@ a = Analysis(['HGC.py'],
              pathex=[],
              binaries=[],
              datas=[
-                ('HGC.ui', '.'),
-                ('HGM.ico','.')
+                ('ui\HGC.ui', 'ui'),
+                ('assets/HGM.ico','assets')
              ],
              hiddenimports=[],
              hookspath=[],

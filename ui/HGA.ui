@@ -280,22 +280,6 @@ p, li { white-space: pre-wrap; }
     <string>본문</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_move">
-   <property name="geometry">
-    <rect>
-     <x>440</x>
-     <y>380</y>
-     <width>91</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="autoFillBackground">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>크롤링</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>
