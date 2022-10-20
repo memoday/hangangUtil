@@ -13,7 +13,7 @@
 <img src="https://user-images.githubusercontent.com/74040890/196876413-7c237e69-47a8-482c-bf92-ee8ac1d49ff7.png" width="50%" height="50%">
 
 ```
-pyinstaller HGA.spec
+pyinstaller
 ```
 
 
@@ -26,7 +26,7 @@ pyinstaller HGA.spec
 <img src="https://user-images.githubusercontent.com/74040890/196871414-58b6d656-8be6-406c-8f4a-bbd7c5ce62ff.png" width="20%" height="20%">
 
 ```
-pyinstaller HGC.spec
+pyinstaller
 ```
 
 
