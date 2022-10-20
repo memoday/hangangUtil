@@ -1,4 +1,4 @@
-
+> ## <br><br> 다운로드 [링크](https://github.com/memoday/hangangUtil/releases/tag/HGA)
 >  <br><br><br><br><br> 내용 업데이트 중입니다 <br><br><br><br><br>
 
 
@@ -24,5 +24,6 @@ pyinstaller -F HGMessage.py<br>
 # 3. HGC : Crawl
 ### 네이버 뉴스기사 특정 기간 크롤링
 ```
+pyinstaller HGC.spec
 
 ```
