@@ -76,7 +76,6 @@ def fileCreate(searchKeyword, sort,fileNameDays,self):
         wb = openpyxl.Workbook()            
     ws1 = wb.active
 
-
 def crawl(searchKeyword, dateStart, sort, self):
 
     setting = {
@@ -186,6 +185,7 @@ class WindowClass(QMainWindow, form_class):
                 urlDays = dateStart+ datetime.timedelta(days= i)
                 urlDays = str(urlDays.strftime('%Y.%m.%d'))
                 crawl(searchKeyword, urlDays, sort, self)
+
                 i += 1
 
     def exit(self):
