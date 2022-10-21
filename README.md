@@ -10,7 +10,8 @@
 - 기사 제목, 언론사, 본문 내용(작성 날짜/시간 포함) 정보 크롤링
 *네이버 뉴스, 네이버 스포츠뉴스, 뉴스핌 지원
 <br>
-<img src="https://user-images.githubusercontent.com/74040890/196876413-7c237e69-47a8-482c-bf92-ee8ac1d49ff7.png" width="50%" height="50%">
+<img src="https://user-images.githubusercontent.com/74040890/197082481-45d161c6-9c3b-4e60-8829-1b09376c1f75.png" width="50%" height="50%">
+
 
 ```
 pyinstaller
