@@ -1,5 +1,4 @@
 import sys
-from turtle import clear
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
 import requests
@@ -15,8 +14,9 @@ def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
     return os.path.join(base_path, relative_path)
     
-icon = resource_path('HGM.ico')
+icon = resource_path('assets/HGM.ico')
 form = resource_path('ui/HGA.ui')
+
 
 form_class = uic.loadUiType(form)[0]
 print("프로그램이 구동됩니다.")
@@ -38,13 +38,32 @@ def checkNews(url) -> tuple : #언론사별 selector
         press = source.select_one("#ct > div.media_end_head.go_trans > div.media_end_head_top > a > img.media_end_head_top_logo_img.light_type")['alt']
         content = source.select_one("#dic_area")
         date = source.select_one("#ct > div.media_end_head.go_trans > div.media_end_head_info.nv_notrans > div.media_end_head_info_datestamp > div > span").text
+        contentStr = str(content).replace('<br/>','\n') #<br>태그 Enter키로 변경
+        contentStr = str(contentStr).replace('</table>','\n') #이미지 부연설명 내용과 분리
+        contentStr = contentStr.replace('</img>','[사진]\n') #이미지 위치 확인
+        to_clean = re.compile('<.*?>') # <> 사이에 있는 것들
+        contentEdited = re.sub(to_clean,'',contentStr) #html태그 모두 지우기
 
     if "sports.news.naver" in url: #네이버 스포츠뉴스
         print('sports.news.naver checked')
         title = source.select_one("#content > div > div.content > div > div.news_headline > h4").text
         press = source.select_one("#pressLogo > a > img")['alt']
         content = source.select_one("#newsEndContents")
+        content.select_one('p').decompose()
+        content.select_one('p').decompose()
+        content.select_one('div').decompose()
+        content.select_one('div').decompose()
+        content.select_one('div').decompose()
+        content.select_one('div').decompose()
+        print('==================================')
+        print(content)
         date = source.select_one("#content > div > div.content > div > div.news_headline > div > span:nth-child(1)").text
+        contentStr = str(content).replace('<br/>','\n') #<br>태그 Enter키로 변경
+        contentStr = str(contentStr).replace('</table>','\n') #이미지 부연설명 내용과 분리
+        print('<table> 통과')
+        contentStr = contentStr.replace('</img>','[사진]\n') #이미지 위치 확인
+        to_clean = re.compile('<.*?>') # <> 사이에 있는 것들
+        contentEdited = re.sub(to_clean,'',contentStr) #html태그 모두 지우기
 
     if "newspim.com" in url: #뉴스핌
         print('newspim checked')
@@ -53,10 +72,15 @@ def checkNews(url) -> tuple : #언론사별 selector
         content = source.select_one("#wrap > div.container.subwrap > div > div:nth-child(2) > div.left > div > div.contents")
         date = source.select_one("#send-time").text
         date = date.replace("년",".").replace("월",".").replace("일","")
+        contentStr = str(content).replace('<br/>','\n') #<br>태그 Enter키로 변경
+        contentStr = str(contentStr).replace('</table>','\n') #이미지 부연설명 내용과 분리
+        contentStr = contentStr.replace('</img>','[사진]\n') #이미지 위치 확인
+        to_clean = re.compile('<.*?>') # <> 사이에 있는 것들
+        contentEdited = re.sub(to_clean,'',contentStr) #html태그 모두 지우기
 
     else:
         print("호환되지 않는 언론사입니다")
-    return title,press,content,date
+    return title,press,contentEdited,date
 
 class WindowClass(QMainWindow, form_class) :
 
@@ -100,14 +124,9 @@ class WindowClass(QMainWindow, form_class) :
                 title, press, content, date = checkNews(url)
                 self.statusBar().showMessage('인식된 언론사: '+press)
 
-                contentStr = str(content).replace('<br/>','\n') #<br>태그 Enter키로 변경
-                contentStr = str(contentStr).replace('</table>','\n') #이미지 부연설명 내용과 분리
-                contentStr = contentStr.replace('</img>','[사진]\n') #이미지 위치 확인
-                to_clean = re.compile('<.*?>') # <> 사이에 있는 것들
-                contentOut = re.sub(to_clean,'',contentStr) #html태그 모두 지우기
 
-                print(title+"\n"+press+" "+date+"\n"+contentOut)
-                output = title+"\n"+press+" "+date+"\n"+contentOut
+                print(title+"\n"+press+" "+date+"\n"+content)
+                output = title+"\n"+press+" "+date+"\n"+content
                 output_2 = title+"\n"+hgs.hanglShorten(url) #단축된 링크로 제공
 
                 self.output.setText(output)

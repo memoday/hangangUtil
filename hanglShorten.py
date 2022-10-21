@@ -1,24 +1,30 @@
-import requests
-import json
+import time
+from selenium import webdriver
+import os, sys
 
-headers = {
-    'Authorization': 'Bearer 06e325d393d2807edd1bcb9aa229ce28', #han.gl 개발자 도구 curl 참고
-    'Content-Type': 'application/json',
-}
+options = webdriver.ChromeOptions()
+options.add_experimental_option("excludeSwitches", ["enable-logging"])
+options.add_argument('User-Agent= Mozilla/5.0')
+options.add_argument('headless') #크롬창 표시 금지
 
-def hanglShorten(longUrl):  
-    data = '{"url": "'+longUrl+'"}'
-    response = requests.post('https://han.gl/api/url/add', headers=headers, data=data,timeout=5)
-    if response.status_code == 200:
-        if "han.gl" in longUrl: #이미 단축되어있는 링크라면 단축하지 않음
-            return longUrl
-        else:
-            jsonObject = json.loads(response.text)
-            print('\n===링크 단축 성공===')
-            shortUrl = jsonObject.get("shorturl") #Server Response에서 shorturl을 불러옴
-            print(shortUrl)
-            return shortUrl
-    if response.status_code == 403:
-        print('Error Code: 403')
-    if response.status_code == 400:
-        print('Error Code: 400')
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
+    return os.path.join(base_path, relative_path)
+driver_path = resource_path('chromedriver.exe')
+
+
+driver = webdriver.Chrome(options=options, executable_path=driver_path)
+
+def hanglShorten(longUrl):
+    driver.get("https://han.gl")
+
+    driver.find_element_by_id('url').send_keys(longUrl)
+    driver.find_element_by_xpath('/html/body/section[1]/div/div/div/div/form/div/div/button[2]').click()
+
+    shortenUrl = driver.find_element_by_xpath('/html/body/section[1]/div/div/div/div/form/div/div/button[1]')
+    time.sleep(1) #슬립없으면 값을 바로 못 불러옴
+    shortenUrl = shortenUrl.get_attribute('data-clipboard-text')
+    print(shortenUrl)
+    
+    return shortenUrl
