@@ -17,6 +17,8 @@ driver_path = resource_path('chromedriver.exe')
 driver = webdriver.Chrome(options=options, executable_path=driver_path)
 
 def hanglShorten(longUrl):
+    if "han.gl" in longUrl:
+        return longUrl
     driver.get("https://han.gl")
 
     driver.find_element_by_id('url').send_keys(longUrl)
