@@ -103,10 +103,6 @@ def crawl(searchKeyword, dateStart, sort, self):
             self.label_main.setText("Not Found")
             self.label_main.setStyleSheet("Color: Red")
             break
-        if checkNextPage == "true":
-            print(page+1,"번째 페이지입니다.")
-        else:
-            print(page+1,"번째 페이지입니다.")
 
         global articles
         articles = html.select("ul.list_news > li")
@@ -119,10 +115,18 @@ def crawl(searchKeyword, dateStart, sort, self):
                 # print(attribute, '\n', source, '\n', title, '\n\n', sum, '\n', nlink, '\n')
 
                 ws1.append(data)
+
+            if checkNextPage == "true":
+                print('다음 페이지가 없어 크롤링을 종료합니다.') #다음 페이지가 존재하지 않을 때
+                wb.save(fileName)
+                break
+            else:
+                print(page+1,"번째 페이지입니다.")
+
             page += 1
 
         except IndexError:
-            print("마지막 기사입니다.")
+            print("다음 기사가 없어 크롤링을 종료합니다.") #해당 페이지 마지막 기사일 때
             wb.save(fileName)
             break
         self.label_main.setText("Success")
