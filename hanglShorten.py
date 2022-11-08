@@ -27,8 +27,11 @@ def hanglShorten(longUrl):
     driver.find_element_by_xpath('/html/body/section[1]/div/div/div/div/form/div/div/button[2]').click()
 
     shortenUrl = driver.find_element_by_xpath('/html/body/section[1]/div/div/div/div/form/div/div/button[1]')
-    time.sleep(1) #슬립없으면 값을 바로 못 불러옴
+    time.sleep(1.5) #슬립없으면 값을 바로 못 불러옴
     shortenUrl = shortenUrl.get_attribute('data-clipboard-text')
     print(shortenUrl)
+
+    driver.close()
+    driver.quit()
     
     return shortenUrl
