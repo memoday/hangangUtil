@@ -8,10 +8,8 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import os, sys
-import time
 
 def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
     return os.path.join(base_path, relative_path)
 
@@ -149,7 +147,6 @@ class Thread1(QThread):
             self.parent.statusBar().showMessage('프로그램 정상 구동 중')
             self.parent.label_main.setText("Date Error")
             self.parent.label_main.setStyleSheet("Color: Red")
-            self.end()
             return
         if searchKeyword is '':
             print('검색어를 입력해주세요')
@@ -175,7 +172,6 @@ class Thread1(QThread):
                 self.parent.label_main.setText("File Exists")
                 self.parent.btn_start.setEnabled(True)
                 self.parent.statusBar().showMessage('프로그램 정상 구동 중')
-                self.end()
                 return
 
             i = 0
@@ -193,11 +189,10 @@ class Thread1(QThread):
         if self.parent.label_main.text() != "Not Found":
             self.parent.label_main.setText("Success")
             self.parent.label_main.setStyleSheet("Color: Green")
-        
-        self.end()
 
     def end(self):
         self.quit()
+        self.sleep(1)
 
 
 class WindowClass(QMainWindow, form_class):
@@ -225,6 +220,7 @@ class WindowClass(QMainWindow, form_class):
     def main(self):
         x = Thread1(self)
         x.start()
+        x.end()
 
     def exit(self):
         sys.exit(0)
