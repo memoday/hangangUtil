@@ -149,6 +149,7 @@ class Thread1(QThread):
             self.parent.statusBar().showMessage('프로그램 정상 구동 중')
             self.parent.label_main.setText("Date Error")
             self.parent.label_main.setStyleSheet("Color: Red")
+            self.end()
             return
         if searchKeyword is '':
             print('검색어를 입력해주세요')
@@ -174,6 +175,7 @@ class Thread1(QThread):
                 self.parent.label_main.setText("File Exists")
                 self.parent.btn_start.setEnabled(True)
                 self.parent.statusBar().showMessage('프로그램 정상 구동 중')
+                self.end()
                 return
 
             i = 0
@@ -191,6 +193,12 @@ class Thread1(QThread):
         if self.parent.label_main.text() != "Not Found":
             self.parent.label_main.setText("Success")
             self.parent.label_main.setStyleSheet("Color: Green")
+        
+        self.end()
+
+    def end(self):
+        self.quit()
+
 
 class WindowClass(QMainWindow, form_class):
 
