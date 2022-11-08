@@ -8,6 +8,7 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import os, sys
+import time
 
 def resource_path(relative_path):
     """ Get absolute path to resource, works for dev and for PyInstaller """
@@ -68,8 +69,6 @@ def fileCreate(searchKeyword, sort,fileNameDays,self):
 
     try:
         wb = openpyxl.load_workbook(fileName)
-        self.label_main.setText("File Exists")
-        self.label_main.setStyleSheet("Color: Red")
         return 'exists'
     except FileNotFoundError:
         print('FileNotFound: 엑셀 파일을 새로 생성합니다.')
@@ -122,6 +121,7 @@ def crawl(searchKeyword, dateStart, sort, self):
                 break
             else:
                 print(page+1,"번째 페이지입니다.")
+                self.statusBar().showMessage(data[2])
 
             page += 1
 
@@ -129,8 +129,68 @@ def crawl(searchKeyword, dateStart, sort, self):
             print("다음 기사가 없어 크롤링을 종료합니다.") #해당 페이지 마지막 기사일 때
             wb.save(fileName)
             break
-        self.label_main.setText("Success")
-        self.label_main.setStyleSheet("Color: Green")
+
+class Thread1(QThread):
+    def __init__(self, parent):
+        super().__init__(parent)
+        self.parent = parent
+    
+    def run(self):
+        self.parent.btn_start.setDisabled(True)
+        self.parent.statusBar().showMessage('프로그램 정상 구동 중')
+        self.parent.label_main.setText("Crawling..")
+        self.parent.label_main.setStyleSheet("Color: Black")
+
+        searchKeyword = self.parent.input_keyword.text()
+
+        if self.parent.dateStart.date() > self.parent.dateEnd.date():
+            print('입력된 날짜를 다시 확인 해주세요.')
+            self.parent.btn_start.setEnabled(True)
+            self.parent.statusBar().showMessage('프로그램 정상 구동 중')
+            self.parent.label_main.setText("Date Error")
+            self.parent.label_main.setStyleSheet("Color: Red")
+            return
+        if searchKeyword is '':
+            print('검색어를 입력해주세요')
+        else:
+            dateStart = self.parent.dateStart.date().toString('yyyy.MM.dd')
+            dateEnd = self.parent.dateEnd.date().toString('yyyy.MM.dd')
+
+            rangeDays = getRange(dateStart,dateEnd)
+
+            fileNameDays = dateStart+'~'+dateEnd #파일명에 들어갈 날짜
+
+            dsY,dsM,dsD = map(int,dateStart.split('.'))
+            dateStart = datetime.datetime(dsY,dsM,dsD) 
+            #dateStart를 str에서 datetime으로 type 변경, 날짜 계산하기 위한 과정
+
+            sort = str(self.parent.combo_sort.currentIndex()) #combo box안에 있는 값 전달
+
+            fileCreate(searchKeyword,sort,fileNameDays,self.parent)
+            file = fileCreate(searchKeyword,sort,fileNameDays,self.parent)
+
+            if file == 'exists':
+                self.parent.label_main.setStyleSheet("Color: Red")
+                self.parent.label_main.setText("File Exists")
+                self.parent.btn_start.setEnabled(True)
+                self.parent.statusBar().showMessage('프로그램 정상 구동 중')
+                return
+
+            i = 0
+
+            for i in range(rangeDays+1):
+                #기간 검색시 최근 기사의 작성날짜 정보를 불러오지 못해 rangeDays만큼 crawl()를 반복시킴
+                urlDays = dateStart+ datetime.timedelta(days= i)
+                urlDays = str(urlDays.strftime('%Y.%m.%d'))
+                crawl(searchKeyword, urlDays, sort, self.parent)
+                i += 1
+
+
+        self.parent.btn_start.setEnabled(True)
+        self.parent.statusBar().showMessage('프로그램 정상 구동 중')
+        if self.parent.label_main.text() != "Not Found":
+            self.parent.label_main.setText("Success")
+            self.parent.label_main.setStyleSheet("Color: Green")
 
 class WindowClass(QMainWindow, form_class):
 
@@ -153,44 +213,10 @@ class WindowClass(QMainWindow, form_class):
         self.btn_start.clicked.connect(self.main)
         self.input_keyword.returnPressed.connect(self.main)
         self.btn_exit.clicked.connect(self.exit)
-    
+
     def main(self):
-
-        searchKeyword = self.input_keyword.text()
-
-        if self.dateStart.date() > self.dateEnd.date():
-            print('입력된 날짜를 다시 확인 해주세요.')
-        if searchKeyword is '':
-            print('검색어를 입력해주세요')
-        else:
-            dateStart = self.dateStart.date().toString('yyyy.MM.dd')
-            dateEnd = self.dateEnd.date().toString('yyyy.MM.dd')
-
-            rangeDays = getRange(dateStart,dateEnd)
-
-            fileNameDays = dateStart+'~'+dateEnd #파일명에 들어갈 날짜
-
-            dsY,dsM,dsD = map(int,dateStart.split('.'))
-            dateStart = datetime.datetime(dsY,dsM,dsD) 
-            #dateStart를 str에서 datetime으로 type 변경, 날짜 계산하기 위한 과정
-
-            sort = str(self.combo_sort.currentIndex()) #combo box안에 있는 값 전달
-
-            fileCreate(searchKeyword,sort,fileNameDays,self)
-            file = fileCreate(searchKeyword,sort,fileNameDays,self)
-
-            if file == 'exists':
-                return
-
-            i = 0
-
-            for i in range(rangeDays+1):
-                #기간 검색시 최근 기사의 작성날짜 정보를 불러오지 못해 rangeDays만큼 crawl()를 반복시킴
-                urlDays = dateStart+ datetime.timedelta(days= i)
-                urlDays = str(urlDays.strftime('%Y.%m.%d'))
-                crawl(searchKeyword, urlDays, sort, self)
-
-                i += 1
+        x = Thread1(self)
+        x.start()
 
     def exit(self):
         sys.exit(0)
