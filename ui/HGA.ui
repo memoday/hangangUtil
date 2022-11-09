@@ -57,7 +57,7 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'맑은 고딕'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
 &lt;p align=&quot;center&quot; style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;복사할 내용 미리보기&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;br /&gt;&lt;br /&gt;&amp;lt;본문 내용&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="input_link">
@@ -101,7 +101,7 @@ p, li { white-space: pre-wrap; }
     </font>
    </property>
    <property name="text">
-    <string>뉴스 링크 입력</string>
+    <string>네이버뉴스 링크</string>
    </property>
    <property name="textFormat">
     <enum>Qt::AutoText</enum>
@@ -140,7 +140,7 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'맑은 고딕'; font-size:9pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&amp;lt;기사 제목&amp;gt;&lt;/p&gt;
-&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&amp;lt;han.gl&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+&lt;p align=&quot;center&quot; style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&amp;lt;단축링크&amp;gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_exit">
@@ -171,11 +171,11 @@ p, li { white-space: pre-wrap; }
    <property name="font">
     <font>
      <family>굴림</family>
-     <pointsize>9</pointsize>
+     <pointsize>10</pointsize>
     </font>
    </property>
    <property name="text">
-    <string>기사제목&amp;단축링크 + 기사 본문</string>
+    <string>네이버뉴스 크롤러</string>
    </property>
    <property name="textFormat">
     <enum>Qt::AutoText</enum>
@@ -210,7 +210,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>언론사</string>
+    <string>언론사 복사</string>
    </property>
   </widget>
   <widget class="QPushButton" name="btn_copyOutput2">
@@ -226,7 +226,7 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>제목+링크</string>
+    <string>제목 복사</string>
    </property>
   </widget>
   <widget class="Line" name="line">
@@ -258,7 +258,7 @@ p, li { white-space: pre-wrap; }
     </font>
    </property>
    <property name="text">
-    <string>복사버튼</string>
+    <string>부가기능</string>
    </property>
    <property name="textFormat">
     <enum>Qt::AutoText</enum>
@@ -277,7 +277,39 @@ p, li { white-space: pre-wrap; }
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>본문</string>
+    <string>본문 복사</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_url">
+   <property name="geometry">
+    <rect>
+     <x>440</x>
+     <y>140</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>웹으로 보기</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_copyOutput_3">
+   <property name="geometry">
+    <rect>
+     <x>540</x>
+     <y>100</y>
+     <width>91</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="autoFillBackground">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>본문 복사</string>
    </property>
   </widget>
  </widget>
