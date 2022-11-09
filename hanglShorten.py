@@ -16,9 +16,8 @@ else:
     print('installing chromedriver')
     chromedriver_autoinstaller.install(cwd=True) #chromedriver 크롬 버전에 맞춰 설치
 
-driver = webdriver.Chrome(options=options, executable_path=driver_path)
-
 def hanglShorten(longUrl):
+    driver = webdriver.Chrome(options=options, executable_path=driver_path)
     if "han.gl" in longUrl:
         return longUrl
     driver.get("https://han.gl")
