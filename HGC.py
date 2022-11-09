@@ -144,7 +144,17 @@ def excelStyle(): #엑셀 stylesheet 변경
                      bottom=Side(style='thin'))
     
     try:
-        for i in range(5): #A열 to F열 선택
+        for nlink in list(ws1.columns)[5]: #F열 파워링크는 별개로 처리
+            powerLink = nlink.value
+
+            nlink.value = powerLink
+            nlink.hyperlink = powerLink
+            nlink.style = "Hyperlink"
+            nlink.font = Font(size=10, color="0645AD")
+            nlink.alignment = Alignment(horizontal='center',vertical='center')
+            nlink.border = thin_border
+
+        for i in range(4): #A열 to E열 선택
             for cell_obj in list(ws1.columns)[i]:
                 cell_obj.font = Font(size=10)
                 cell_obj.alignment = Alignment(horizontal='center',vertical='center')
