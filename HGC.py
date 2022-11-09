@@ -8,6 +8,10 @@ from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import *
 import os, sys
+from openpyxl.styles.fonts import Font
+from openpyxl.styles import Alignment
+from openpyxl.styles.borders import Border, Side
+
 
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -128,6 +132,29 @@ def crawl(searchKeyword, dateStart, sort, self):
             wb.save(fileName)
             break
 
+def excelStyle(): #엑셀 stylesheet 변경
+
+    print('excelStyle')
+    ws1.column_dimensions['C'].width = 50
+    ws1.column_dimensions['E'].width = 17
+
+    thin_border = Border(left=Side(style='thin'), 
+                     right=Side(style='thin'), 
+                     top=Side(style='thin'), 
+                     bottom=Side(style='thin'))
+    
+    try:
+        for i in range(5): #A열 to F열 선택
+            for cell_obj in list(ws1.columns)[i]:
+                cell_obj.font = Font(size=10)
+                cell_obj.alignment = Alignment(horizontal='center',vertical='center')
+                cell_obj.border = thin_border
+
+        wb.save(fileName)
+    
+    except IndexError:
+        pass
+
 class Thread1(QThread):
     def __init__(self, parent):
         super().__init__(parent)
@@ -186,6 +213,8 @@ class Thread1(QThread):
 
         self.parent.btn_start.setEnabled(True)
         self.parent.statusBar().showMessage('프로그램 정상 구동 중')
+        excelStyle()
+
         if self.parent.label_main.text() != "Not Found":
             self.parent.label_main.setText("Success")
             self.parent.label_main.setStyleSheet("Color: Green")
@@ -216,6 +245,7 @@ class WindowClass(QMainWindow, form_class):
     def main(self):
         x = Thread1(self)
         x.start()
+        
 
     def exit(self):
         sys.exit(0)
