@@ -190,10 +190,6 @@ class Thread1(QThread):
             self.parent.label_main.setText("Success")
             self.parent.label_main.setStyleSheet("Color: Green")
 
-    def end(self):
-        self.quit()
-        self.sleep(1)
-
 
 class WindowClass(QMainWindow, form_class):
 
@@ -220,11 +216,9 @@ class WindowClass(QMainWindow, form_class):
     def main(self):
         x = Thread1(self)
         x.start()
-        x.end()
 
     def exit(self):
         sys.exit(0)
-
 
 if __name__ == "__main__":
     app = QApplication(sys.argv) 
