@@ -296,22 +296,6 @@ p, li { white-space: pre-wrap; }
     <string>웹으로 보기</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="btn_copyOutput_3">
-   <property name="geometry">
-    <rect>
-     <x>540</x>
-     <y>100</y>
-     <width>91</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="autoFillBackground">
-    <bool>false</bool>
-   </property>
-   <property name="text">
-    <string>본문 복사</string>
-   </property>
-  </widget>
  </widget>
  <resources/>
  <connections/>
