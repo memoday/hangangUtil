@@ -248,12 +248,12 @@
    </property>
    <property name="font">
     <font>
-     <family>맑은 고딕</family>
+     <family>나눔스퀘어</family>
      <pointsize>20</pointsize>
     </font>
    </property>
    <property name="text">
-    <string>크롤링 대기 중</string>
+    <string>작업 대기 중</string>
    </property>
    <property name="alignment">
     <set>Qt::AlignCenter</set>
@@ -278,6 +278,24 @@
    </property>
    <property name="text">
     <string>~</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="check_excelStyle">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>150</y>
+     <width>121</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <pointsize>9</pointsize>
+    </font>
+   </property>
+   <property name="text">
+    <string>엑셀 서식 변경</string>
    </property>
   </widget>
  </widget>

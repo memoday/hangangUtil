@@ -223,7 +223,9 @@ class Thread1(QThread):
 
         self.parent.btn_start.setEnabled(True)
         self.parent.statusBar().showMessage('프로그램 정상 구동 중')
-        excelStyle()
+
+        if self.parent.check_excelStyle.isChecked() == True:
+            excelStyle()
 
         if self.parent.label_main.text() != "Not Found":
             self.parent.label_main.setText("Success")
@@ -240,6 +242,7 @@ class WindowClass(QMainWindow, form_class):
         self.setWindowIcon(QIcon(icon))
         self.setWindowTitle('HGC')
         self.statusBar().showMessage('프로그램 정상 구동 중')
+        self.check_excelStyle.toggle()
 
         #실행 후 기본값 설정
         yesterdayDate = QDate(ty,tm,td-1)
