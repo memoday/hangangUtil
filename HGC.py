@@ -13,6 +13,7 @@ from openpyxl.styles import Alignment
 from openpyxl.styles.borders import Border, Side
 
 
+
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
     return os.path.join(base_path, relative_path)
@@ -151,10 +152,9 @@ def excelStyle(): #엑셀 stylesheet 변경
             nlink.hyperlink = powerLink
             nlink.style = "Hyperlink"
             nlink.font = Font(size=10, color="0645AD")
-            nlink.alignment = Alignment(horizontal='center',vertical='center')
             nlink.border = thin_border
 
-        for i in range(4): #A열 to E열 선택
+        for i in range(5): #A열 to E열 선택
             for cell_obj in list(ws1.columns)[i]:
                 cell_obj.font = Font(size=10)
                 cell_obj.alignment = Alignment(horizontal='center',vertical='center')
@@ -173,8 +173,8 @@ class Thread1(QThread):
     def run(self):
         self.parent.btn_start.setDisabled(True)
         self.parent.statusBar().showMessage('프로그램 정상 구동 중')
-        self.parent.label_main.setText("Crawling..")
-        self.parent.label_main.setStyleSheet("Color: Black")
+        self.parent.label_main.setText("작업 진행 중")
+        self.parent.label_main.setStyleSheet("Color: Orange")
 
         searchKeyword = self.parent.input_keyword.text()
 
@@ -228,8 +228,13 @@ class Thread1(QThread):
             excelStyle()
 
         if self.parent.label_main.text() != "Not Found":
-            self.parent.label_main.setText("Success")
+            self.parent.label_main.setText("작업 완료")
             self.parent.label_main.setStyleSheet("Color: Green")
+        
+        if self.parent.check_autoShutdown.isChecked() == True:
+            os.system("start EXCEL.exe "+fileName)
+            sys.exit(0)
+        
 
 
 class WindowClass(QMainWindow, form_class):
@@ -243,6 +248,7 @@ class WindowClass(QMainWindow, form_class):
         self.setWindowTitle('HGC')
         self.statusBar().showMessage('프로그램 정상 구동 중')
         self.check_excelStyle.toggle()
+        self.check_autoShutdown.toggle()
 
         #실행 후 기본값 설정
         yesterdayDate = QDate(ty,tm,td-1)
@@ -257,8 +263,7 @@ class WindowClass(QMainWindow, form_class):
 
     def main(self):
         x = Thread1(self)
-        x.start()
-        
+        x.start()  
 
     def exit(self):
         sys.exit(0)
