@@ -59,6 +59,7 @@ def checkNews(url) -> tuple : #언론사별 selector
         to_clean = re.compile('<.*?>') # <> 사이에 있는 것들
         contentEdited = re.sub(to_clean,'',contentStr) #html태그 모두 지우기
     
+    
     # if "hg-times.com" in url: #한강타임즈
     #     print('hg-times.com checked')
     #     title = source.select_one('#user-container > div.float-center.max-width-1100 > header > header > div').text
