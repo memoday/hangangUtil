@@ -101,6 +101,12 @@ def checkNews(url) -> tuple : #언론사별 selector
 
         try:
             press = source.find('meta',property='og:site_name')['content']
+
+            if '세상을 깨우는 재미진 목소리' in press:
+                press = '위키트리'
+            elif '100세시대의 동반자' in press:
+                press = '브릿지경제'
+            
         except:
             press = ''
             print('site_name meta값을 찾을 수 없습니다')
