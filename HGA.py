@@ -44,6 +44,7 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_copyPress.clicked.connect(self.copyPress)
         self.btn_copyOutput.clicked.connect(self.copyOutput)
         self.btn_url.clicked.connect(self.openURL)
+        self.btn_copyDate.clicked.connect(self.copyDate)
         
         #기타
         self.input_link.setFocus() #프로그램 실행시 input_link 자동 선택
@@ -53,11 +54,12 @@ class WindowClass(QMainWindow, form_class) :
     
     def shortenUrl(self) :
         url = self.input_link.text()
+        self.output.setText('')
         self.output_2.setText(hgs.hanglShorten(url))
         self.statusBar().showMessage('링크 단축 성공')
 
     def runCrawl(self):
-        global output, press
+        global output, press, date
         if self.input_link.text() != "":
             try:
                 url = self.input_link.text()
@@ -107,6 +109,13 @@ class WindowClass(QMainWindow, form_class) :
             print('inputURL')
             webbrowser.open_new_tab(inputURL)
 
+    def copyDate(self):
+        try:
+            date_ = date[0:11]
+            pyperclip.copy(date_)
+            self.statusBar().showMessage('날짜 복사 성공')
+        except NameError:
+            self.output.setText('복사할 내용이 없습니다.')
 
 if __name__ == "__main__":
     app = QApplication(sys.argv) 
