@@ -2,10 +2,19 @@ import time
 from selenium import webdriver
 import os, sys
 import chromedriver_autoinstaller
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
+
+
+start = time.time()
 
 options = webdriver.ChromeOptions()
-options.add_experimental_option("excludeSwitches", ["enable-logging"])
 options.add_argument('User-Agent= Mozilla/5.0')
+options.add_argument("--disable-extensions")
+options.add_argument("disable-infobars")
+options.add_argument("disable-gpu")
+caps = DesiredCapabilities().CHROME
+caps["pageLoadStrategy"] = "none"
+
 options.add_argument('headless') #크롬창 표시 금지
 
 chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]
@@ -30,7 +39,12 @@ def hanglShorten(longUrl):
     shortenUrl = shortenUrl.get_attribute('data-clipboard-text')
     print(shortenUrl)
 
+    print('time:',time.time()- start)
+
     driver.close()
     driver.quit()
     
     return shortenUrl
+
+if __name__ == "__main__":
+    hanglShorten('http://naver.com')
