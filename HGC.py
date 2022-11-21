@@ -55,8 +55,25 @@ def getContents(articleIndex) -> tuple:
     sum = articles[articleIndex].select_one("a.api_txt_lines.dsc_txt_wrap").text
     try:
         nlink = articles[articleIndex].select_one("div.news_info > div.info_group > a:nth-child(3)")["href"]
+        if title[-3:] == '...': #제목이 길어 뒷부분이 생략되는 경우 meta값을 불러옴
+            try:
+                getTitleUrl = nlink
+                titleUrl_ = requests.get(getTitleUrl, headers={'User-Agent':'Mozilla/5.0'})
+                titleUrl = BeautifulSoup(titleUrl_.text, "html.parser")
+                title = titleUrl.find('meta',property='og:title')['content']
+            except:
+                pass  
     except: 
         nlink = articles[articleIndex].select_one("a.news_tit")["href"]
+
+        if title[-3:] == '...': #제목이 길어 뒷부분이 생략되는 경우 meta값을 불러옴
+            try:
+                getTitleUrl = nlink
+                titleUrl_ = requests.get(getTitleUrl, headers={'User-Agent':'Mozilla/5.0'})
+                titleUrl = BeautifulSoup(titleUrl_.text, "html.parser")
+                title = titleUrl.find('meta',property='og:title')['content']
+            except:
+                pass 
 
     return title, source, sum, nlink
 
