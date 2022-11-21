@@ -53,7 +53,10 @@ def getContents(articleIndex) -> tuple:
     title = articles[articleIndex].select_one("a.news_tit").text
     source = articles[articleIndex].select_one("a.info.press").text.replace("언론사 선정","") #언론사 PICK태그에 #text '언론사 선정' 제거
     sum = articles[articleIndex].select_one("a.api_txt_lines.dsc_txt_wrap").text
-    nlink = articles[articleIndex].select_one("a.news_tit")["href"]
+    try:
+        nlink = articles[articleIndex].select_one("div.news_info > div.info_group > a:nth-child(3)")["href"]
+    except: 
+        nlink = articles[articleIndex].select_one("a.news_tit")["href"]
 
     return title, source, sum, nlink
 
@@ -263,7 +266,7 @@ class WindowClass(QMainWindow, form_class):
 
     def main(self):
         x = Thread1(self)
-        x.start()  
+        x.start()
 
     def exit(self):
         sys.exit(0)
