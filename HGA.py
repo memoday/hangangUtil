@@ -8,6 +8,8 @@ import os
 import checkNews as cn
 import webbrowser
 
+__version__ = 'v1.2.1'
+
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
     return os.path.join(base_path, relative_path)
@@ -28,6 +30,7 @@ class WindowClass(QMainWindow, form_class) :
         self.setWindowIcon(QIcon(icon))
         self.setWindowTitle('HGA')
         self.statusBar().showMessage('프로그램 정상 구동 중')
+        self.label_version.setText(__version__)
 
         #버튼에 기능을 연결하는 코드
         self.btn_ok.clicked.connect(self.runCrawl)
