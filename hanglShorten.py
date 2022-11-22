@@ -9,7 +9,7 @@ options.add_argument("--disable-extensions")
 options.add_argument("disable-infobars")
 options.add_argument("disable-gpu")
 
-# options.add_argument('headless') #크롬창 표시 금지
+options.add_argument('headless') #크롬창 표시 금지
 
 chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]
 driver_path = f'./{chrome_ver}/chromedriver.exe'
