@@ -1,10 +1,7 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5 import uic
-import requests
-from bs4 import BeautifulSoup
 import pyperclip
-import re
 from PyQt5.QtGui import *
 import hanglShorten as hgs
 import os
@@ -12,13 +9,11 @@ import checkNews as cn
 import webbrowser
 
 def resource_path(relative_path):
-    """ Get absolute path to resource, works for dev and for PyInstaller """
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
     return os.path.join(base_path, relative_path)
     
 icon = resource_path('assets/HGM.ico')
 form = resource_path('ui/HGA.ui')
-
 
 form_class = uic.loadUiType(form)[0]
 print("프로그램이 구동됩니다.")
@@ -50,6 +45,8 @@ class WindowClass(QMainWindow, form_class) :
         self.input_link.setFocus() #프로그램 실행시 input_link 자동 선택
 
     def exit(self) :
+        hgs.exit()
+        os.system("taskkill /f /im chromedriver.exe") #chomrdriver.exe 강제종료
         sys.exit(0)
     
     def shortenUrl(self) :
