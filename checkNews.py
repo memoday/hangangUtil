@@ -114,10 +114,18 @@ def checkNews(url) -> tuple : #언론사별 selector
         contentEdited = ''
 
         try:
-            date = source.find('meta',property='article:published_time')['content']
-            date = date[0:10]
-            date = datetime.strptime(date,'%Y-%m-%d')
-            date = str(datetime.strftime(date,'%Y.%m.%d.'))
+            metaDate = source.find('meta',property='article:published_time')['content']
+            rawDate = metaDate[0:10]
+            rawDate = datetime.strptime(rawDate,'%Y-%m-%d')
+            finalDate = str(datetime.strftime(rawDate,'%Y.%m.%d.'))
+
+            time = metaDate[11:16]
+            time = datetime.strptime(time,'%H:%M')
+            time = str(time.strftime("%p %I:%M"))
+            print(time)
+            finalTime = time.replace('AM','오전').replace('PM','오후')   
+
+            date = (finalDate+' '+finalTime)
 
         except:
             date = ''
