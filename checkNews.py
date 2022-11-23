@@ -40,12 +40,30 @@ def checkNews(url) -> tuple : #언론사별 selector
         content.find(class_ = 'promotion').decompose()
 
         date = source.select_one("#content > div > div.content > div > div.news_headline > div > span:nth-child(1)").text
+        date = date.replace('기사입력 ','')
         
         contentStr = str(content).replace('<br/>','\n') #<br>태그 Enter키로 변경
         contentStr = str(contentStr).replace('</table>','\n') #이미지 부연설명 내용과 분리
         contentStr = contentStr.replace('</img>','[사진]\n') #이미지 위치 확인
         to_clean = re.compile('<.*?>') # <> 사이에 있는 것들
         contentEdited = re.sub(to_clean,'',contentStr) #html태그 모두 지우기
+    
+    elif "entertain.naver.com" in url:
+        print('entertain.naver checked')
+        title = source.find('meta',property='og:title')['content']
+        press = source.select_one("#content > div.end_ct > div > div.press_logo > a > img")['alt']
+        content = source.select_one("#articeBody")
+        date = source.select_one('#content > div.end_ct > div > div.article_info > span > em').text
+
+        contentStr = str(content).replace('<br/>','\n') #<br>태그 Enter키로 변경
+        contentStr = str(contentStr).replace('</table>','\n') #이미지 부연설명 내용과 분리
+        contentStr = contentStr.replace('</img>','[사진]') #이미지 위치 확인
+        to_clean = re.compile('<.*?>') # <> 사이에 있는 것들
+        contentEdited = re.sub(to_clean,'',contentStr) #html태그 모두 지우기
+
+
+
+
 
     # elif "newspim.com" in url: #뉴스핌
     #     print('newspim.com checked')

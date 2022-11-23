@@ -8,7 +8,7 @@ import os
 import checkNews as cn
 import webbrowser
 
-__version__ = 'v1.2.2'
+__version__ = 'v1.2.3'
 
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -36,7 +36,7 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_ok.clicked.connect(self.runCrawl)
         self.input_link.returnPressed.connect(self.runCrawl)
         self.btn_exit.clicked.connect(self.exit)
-        self.btn_shortenUrl.clicked.connect(self.shortenUrl)
+        # self.btn_shortenUrl.clicked.connect(self.shortenUrl)
 
         self.btn_copyOutput2.clicked.connect(self.copyOutput2)
         self.btn_copyPress.clicked.connect(self.copyPress)
@@ -80,25 +80,23 @@ class WindowClass(QMainWindow, form_class) :
                 self.output.setText("호환되지 않는 링크입니다.")
                 self.statusBar().showMessage('호환되지 않는 링크입니다.')
             except Exception :
-                self.output.setText("알 수 없는 이유로 실패했습니다")
-                self.statusBar().showMessage('Exception Error')
+                output_2 = hgs.hanglShorten(url)
+                self.output_2.setText(output_2)
+                # self.statusBar().showMessage('Exception Error')
         else:
             self.output.setText('링크를 입력해주세요')
 
     def copyOutput(self):
         content = self.output.toPlainText()
         pyperclip.copy(content)
-        self.statusBar().showMessage('본문 복사 성공')
 
     def copyOutput2(self):
         content = self.output_2.toPlainText()
         pyperclip.copy(content)
-        self.statusBar().showMessage('제목&링크 복사 성공')
 
     def copyPress(self):
         try:
             pyperclip.copy(press)
-            self.statusBar().showMessage('언론사 복사 성공')
         except NameError:
             self.output.setText('복사할 내용이 없습니다.')
 
@@ -113,7 +111,6 @@ class WindowClass(QMainWindow, form_class) :
         try:
             date_ = date[0:11]
             pyperclip.copy(date_)
-            self.statusBar().showMessage('날짜 복사 성공')
         except NameError:
             self.output.setText('복사할 내용이 없습니다.')
 
