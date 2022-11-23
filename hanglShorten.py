@@ -31,9 +31,19 @@ def hanglShorten(longUrl):
     driver.find_element_by_id('url').send_keys(longUrl)
     driver.find_element_by_xpath('/html/body/section[1]/div/div/div/div/form/div/div/button[2]').click()
 
-    time.sleep(0.7) #슬립없으면 값을 바로 못 불러옴
-    shortenUrl = driver.find_element_by_xpath('/html/body/section[1]/div/div/div/div/form/div/div/button[1]')
-    shortenUrl = shortenUrl.get_attribute('data-clipboard-text')
+    for i in range(20):
+        shortenUrl = driver.find_element_by_xpath('/html/body/section[1]/div/div/div/div/form/div/div/button[1]')
+        shortenUrl = shortenUrl.get_attribute('data-clipboard-text')
+        if shortenUrl != None:
+            print('None 탈출')
+            break
+        i += 1
+        print('재시도 횟수:',i)
+        time.sleep(0.1)
+    
+    if shortenUrl == None:
+        shortenUrl = 'Timeout Error'
+
     print(shortenUrl)
     driver.refresh()
     
@@ -41,6 +51,3 @@ def hanglShorten(longUrl):
 
 def exit():
     driver.quit()
-
-if __name__ == "__main__":
-    hanglShorten('http://naver.com')
