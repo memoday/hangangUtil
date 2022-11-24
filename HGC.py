@@ -1,4 +1,3 @@
-from time import strftime
 import openpyxl
 import requests
 from bs4 import BeautifulSoup
