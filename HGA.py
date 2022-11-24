@@ -47,6 +47,11 @@ class WindowClass(QMainWindow, form_class) :
         #기타
         self.input_link.setFocus() #프로그램 실행시 input_link 자동 선택
 
+    def closeEvent(self, event):
+        hgs.exit()
+        os.system("taskkill /f /im chromedriver.exe") #chomrdriver.exe 강제종료
+        sys.exit(0)
+
     def exit(self) :
         hgs.exit()
         os.system("taskkill /f /im chromedriver.exe") #chomrdriver.exe 강제종료
