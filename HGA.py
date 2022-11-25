@@ -28,9 +28,8 @@ class WindowClass(QMainWindow, form_class) :
 
         #프로그램 기본설정
         self.setWindowIcon(QIcon(icon))
-        self.setWindowTitle('HGA')
+        self.setWindowTitle('HGA '+__version__)
         self.statusBar().showMessage('프로그램 정상 구동 중')
-        self.label_version.setText(__version__)
 
         #버튼에 기능을 연결하는 코드
         self.btn_ok.clicked.connect(self.runCrawl)
@@ -82,8 +81,8 @@ class WindowClass(QMainWindow, form_class) :
                 
             except AttributeError:
                 print(AttributeError)
-                self.output.setText("호환되지 않는 링크입니다.")
-                self.statusBar().showMessage('호환되지 않는 링크입니다.')
+                self.output.setText("호환하지 않는 링크입니다.")
+                self.statusBar().showMessage('호환하지 않는 링크입니다.')
             except Exception :
                 output_2 = hgs.hanglShorten(url)
                 self.output_2.setText(output_2)
@@ -114,7 +113,7 @@ class WindowClass(QMainWindow, form_class) :
 
     def copyDate(self):
         try:
-            date_ = date[0:11]
+            date_ = date[0:10]
             pyperclip.copy(date_)
         except NameError:
             self.output.setText('복사할 내용이 없습니다.')
