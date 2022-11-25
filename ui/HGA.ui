@@ -109,7 +109,7 @@ p, li { white-space: pre-wrap; }
    <property name="font">
     <font>
      <family>굴림</family>
-     <pointsize>7</pointsize>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="text">
@@ -186,7 +186,7 @@ p, li { white-space: pre-wrap; }
    <property name="font">
     <font>
      <family>굴림</family>
-     <pointsize>7</pointsize>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="text">
@@ -253,7 +253,7 @@ p, li { white-space: pre-wrap; }
    <property name="font">
     <font>
      <family>굴림</family>
-     <pointsize>7</pointsize>
+     <pointsize>8</pointsize>
     </font>
    </property>
    <property name="text">
