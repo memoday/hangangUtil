@@ -126,6 +126,22 @@ def checkNews(url) -> tuple : #언론사별 selector
                 press = '위키트리'
             elif '100세시대의 동반자' in press:
                 press = '브릿지경제'
+            elif '(DISCOVERYNEWS)' in press:
+                press = '디스커버리뉴스'
+            elif '인천의 든든한 친구' in press:
+                press = '중부일보'
+            elif 'NSP뉴스통신사' in press:
+                press = 'NSP통신'
+            elif 'NSP뉴스통신사' in press:
+                press = 'NSP통신'
+            elif '종합일간지 : 신문/웹/모바일 등 멀티 채널로 국내외 실시간 뉴스와 수준 높은 정보를 제공' in press:
+                press = '아시아투데이'
+            elif '아침을 여는 신문' in press:
+                press = '기호일보'
+            elif '글로벌 뉴스 미디어 채널 데일리포스트' in press:
+                press = '데일리포스트'
+
+
             
         except:
             press = ''
