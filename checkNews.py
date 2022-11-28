@@ -12,6 +12,8 @@ def checkNews(url) -> tuple : #언론사별 selector
 
     url = get_real_url_from_shortlink(url)
     web = requests.get(url,headers={'User-Agent':'Mozilla/5.0'})
+    if web.encoding == 'ISO-8859-1':
+        web.encoding='UTF-8'
     source = BeautifulSoup(web.text,'html.parser')
 
     if "n.news.naver" in url: #네이버뉴스
