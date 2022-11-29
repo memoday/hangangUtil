@@ -11,7 +11,7 @@ from openpyxl.styles.fonts import Font
 from openpyxl.styles import Alignment
 from openpyxl.styles.borders import Border, Side
 
-
+__version__ = 'v1.3.1'
 
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -115,6 +115,8 @@ def crawl(searchKeyword, dateStart, sort, self):
         newsURL = "https://search.naver.com/search.naver?where=news&query="+setting['searchKeyword']+"&sm=tab_opt&sort="+setting['sort']+"&photo=0&field=0&pd="+setting['period']+"&ds="+setting['dateStart']+"&de="+setting['dateEnd']+"&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=1&start="+str(page)+"1"
 
         raw = requests.get(newsURL, headers={'User-Agent':'Mozilla/5.0'})
+        if raw.encoding == 'ISO-8859-1':
+            raw.encoding='UTF-8'
         html = BeautifulSoup(raw.text, "html.parser")
 
         try:
@@ -264,7 +266,7 @@ class WindowClass(QMainWindow, form_class):
 
         #프로그램 기본설정
         self.setWindowIcon(QIcon(icon))
-        self.setWindowTitle('HGC')
+        self.setWindowTitle('HGC '+__version__)
         self.statusBar().showMessage('프로그램 정상 구동 중')
         self.check_excelStyle.toggle()
         self.check_autoShutdown.toggle()
