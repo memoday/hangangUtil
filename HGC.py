@@ -10,6 +10,7 @@ import os, sys
 from openpyxl.styles.fonts import Font
 from openpyxl.styles import Alignment
 from openpyxl.styles.borders import Border, Side
+import time
 
 __version__ = 'v1.3.1'
 
@@ -253,7 +254,9 @@ class Thread1(QThread):
             self.parent.label_main.setStyleSheet("Color: Green")
         
         if self.parent.check_autoShutdown.isChecked() == True:
-            os.system("start EXCEL.exe "+fileName)
+            time.sleep(2)
+            if os.path.isfile(fileName):
+                os.system("start EXCEL.exe "+fileName)
             sys.exit(0)
         
 
