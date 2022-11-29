@@ -70,6 +70,8 @@ def getContents(articleIndex) -> tuple:
             try:
                 getTitleUrl = nlink
                 titleUrl_ = requests.get(getTitleUrl, headers={'User-Agent':'Mozilla/5.0'})
+                if titleUrl_.encoding == 'ISO-8859-1':
+                    titleUrl_.encoding='UTF-8'
                 titleUrl = BeautifulSoup(titleUrl_.text, "html.parser")
                 title = titleUrl.find('meta',property='og:title')['content']
             except:
@@ -116,8 +118,6 @@ def crawl(searchKeyword, dateStart, sort, self):
         newsURL = "https://search.naver.com/search.naver?where=news&query="+setting['searchKeyword']+"&sm=tab_opt&sort="+setting['sort']+"&photo=0&field=0&pd="+setting['period']+"&ds="+setting['dateStart']+"&de="+setting['dateEnd']+"&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=1&start="+str(page)+"1"
 
         raw = requests.get(newsURL, headers={'User-Agent':'Mozilla/5.0'})
-        if raw.encoding == 'ISO-8859-1':
-            raw.encoding='UTF-8'
         html = BeautifulSoup(raw.text, "html.parser")
 
         try:
