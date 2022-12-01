@@ -35,6 +35,7 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_ok.clicked.connect(self.runCrawl)
         self.input_link.returnPressed.connect(self.runCrawl)
         self.btn_exit.clicked.connect(self.exit)
+        self.autoStart.toggle()
         # self.btn_shortenUrl.clicked.connect(self.shortenUrl)
 
         self.btn_copyOutput2.clicked.connect(self.copyOutput2)
@@ -42,6 +43,7 @@ class WindowClass(QMainWindow, form_class) :
         self.btn_copyOutput.clicked.connect(self.copyOutput)
         self.btn_url.clicked.connect(self.openURL)
         self.btn_copyDate.clicked.connect(self.copyDate)
+        self.btn_paste.clicked.connect(self.paste)
         
         #기타
         self.input_link.setFocus() #프로그램 실행시 input_link 자동 선택
@@ -61,11 +63,20 @@ class WindowClass(QMainWindow, form_class) :
         self.output.setText('')
         self.output_2.setText(hgs.hanglShorten(url))
         self.statusBar().showMessage('링크 단축 성공')
+    
+    def paste(self):
+        copied = pyperclip.paste()
+        if 'http' in copied:
+            self.input_link.setText(copied)
+            if self.autoStart.isChecked() == True:
+                self.runCrawl()
 
     def runCrawl(self):
         global output, press, date
         if self.input_link.text() != "":
             try:
+                url_ = self.input_link.text().replace(" ","")
+                self.input_link.setText(url_)
                 url = self.input_link.text()
                 
                 title, press, content, date = cn.checkNews(url)
