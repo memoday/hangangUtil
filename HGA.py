@@ -8,7 +8,7 @@ import os
 import checkNews as cn
 import webbrowser
 
-__version__ = 'v1.2.4'
+__version__ = 'v1.3.0'
 
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
