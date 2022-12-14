@@ -12,7 +12,7 @@ from openpyxl.styles import Alignment
 from openpyxl.styles.borders import Border, Side
 import time
 
-__version__ = 'v1.3.1'
+__version__ = 'v1.3.2'
 
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -234,13 +234,20 @@ class Thread1(QThread):
                 return
 
             i = 0
-
-            for i in range(rangeDays+1):
-                #기간 검색시 최근 기사의 작성날짜 정보를 불러오지 못해 rangeDays만큼 crawl()를 반복시킴
-                urlDays = dateStart+ datetime.timedelta(days= i)
-                urlDays = str(urlDays.strftime('%Y.%m.%d'))
-                crawl(searchKeyword, urlDays, sort, self.parent)
-                i += 1
+            if sort == '0' or sort == '2':
+                for i in range(rangeDays+1):
+                    #기간 검색시 최근 기사의 작성날짜 정보를 불러오지 못해 rangeDays만큼 crawl()를 반복시킴
+                    urlDays = dateStart+ datetime.timedelta(days= i)
+                    urlDays = str(urlDays.strftime('%Y.%m.%d'))
+                    crawl(searchKeyword, urlDays, sort, self.parent)
+                    i += 1
+            elif sort == '1':
+                for i in reversed(range(rangeDays+1)):
+                    #기간 검색시 최근 기사의 작성날짜 정보를 불러오지 못해 rangeDays만큼 crawl()를 반복시킴
+                    urlDays = dateStart+ datetime.timedelta(days= i)
+                    urlDays = str(urlDays.strftime('%Y.%m.%d'))
+                    crawl(searchKeyword, urlDays, sort, self.parent)
+                    i += 1
 
 
         self.parent.btn_start.setEnabled(True)
@@ -255,8 +262,6 @@ class Thread1(QThread):
         
         if self.parent.check_autoShutdown.isChecked() == True:
             time.sleep(2)
-            if os.path.isfile(fileName):
-                os.system("start EXCEL.exe "+fileName)
             sys.exit(0)
         
 
