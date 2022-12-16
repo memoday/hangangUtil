@@ -1,5 +1,5 @@
-> # <br><br> [다운로드 링크](https://github.com/memoday/hangangUtil/releases/tag/HGA)
->  <br><br><br><br><br> 내용 및 프로그램 업데이트 중입니다 <br><br><br><br><br>
+> # <br><br> [다운로드 링크](https://github.com/memoday/hangangUtil/releases)
+>  <br><br><br><br><br> 업데이트 중 <br><br><br><br><br>
 
 
 # 1. HGA : Article
@@ -22,9 +22,17 @@
 # 2. HGC : Crawl
 ### 네이버 뉴스 크롤링
 
-키워드, 날짜, 정렬 방식 입력 후 엑셀파일로 내보내짐
-<br><br>
-<img src="https://user-images.githubusercontent.com/74040890/196871414-58b6d656-8be6-406c-8f4a-bbd7c5ce62ff.png" width="20%" height="20%">
+입력한 정보로 네이버 검색창 뉴스탭에 있는 기사를 크롤링해 엑셀로 내보냄
+
+- 정렬- 관련도순/최신순/오래된순
+- 크롤링 기간- 검색 기간 설정
+- 검색 키워드- 검색 키워드 입력, 검색 엔진처럼 키워드 제외(-) 호환
+- 엑셀 서식 변경- 내보내질 엑셀을 특정 서식으로 변경하여 내보냄
+- 자동 종료- 크롤링 후 프로그램 자동 종료
+
+<br>
+<img src="https://user-images.githubusercontent.com/74040890/208000710-da171410-788e-438a-bad4-200ec5d28708.png" width="20%" height="20%">
+
 
 ```
 
