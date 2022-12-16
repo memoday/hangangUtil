@@ -1,5 +1,5 @@
 > # <br><br> [다운로드 링크](https://github.com/memoday/hangangUtil/releases)
->  <br><br><br><br><br> 업데이트 중 <br><br><br><br><br>
+>  <br><br><br><br> 업데이트 중 <br><br><br><br>
 
 
 # 1. HGA : Article
@@ -8,9 +8,19 @@
 기사 링크 입력시
 - 링크 자동으로 han.gl 로 단축
 - 기사 제목, 언론사, 본문 내용(작성 날짜/시간 포함) 정보 크롤링
-<br>*네이버 뉴스, 네이버 스포츠뉴스, 네이버 TV연예 지원
+
+추가 기능 설명
+- 웹으로 보기- 입력된 기사링크를 브라우저로 오픈
+- Ctrl+V - 복사한 링크를 입력칸에 바로 붙여넣음
+- 자동 시작 - Ctrl+V 기능 이후 바로 크롤링 시작
+
+
+<br>*본문 내용은 네이버 뉴스, 네이버 스포츠뉴스, 네이버 TV연예 지원
+<br>*네이버뉴스 외 타 기사는 meta값에 따라 제목, 언론사, 작성 날짜/시간 출력
+<br>*누락된 meta값의 경우 출력에서 제외됨
 <br>
-<img src="https://user-images.githubusercontent.com/74040890/197082481-45d161c6-9c3b-4e60-8829-1b09376c1f75.png" width="50%" height="50%">
+<br>
+<img src="https://user-images.githubusercontent.com/74040890/208002157-5f4fdee0-ae5b-40bc-916a-ef0a517b5ba9.png" width="50%" height="50%">
 
 
 ```
