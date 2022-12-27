@@ -31,7 +31,7 @@ def hanglShorten(longUrl):
     driver.find_element_by_id('url').send_keys(longUrl)
     driver.find_element_by_xpath('/html/body/section[1]/div/div/div/div/form/div/div/button[2]').click()
 
-    for i in range(20):
+    for i in range(30):
         shortenUrl = driver.find_element_by_xpath('/html/body/section[1]/div/div/div/div/form/div/div/button[1]')
         shortenUrl = shortenUrl.get_attribute('data-clipboard-text')
         if shortenUrl != None:
