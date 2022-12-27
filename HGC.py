@@ -71,7 +71,7 @@ def getContents(articleIndex) -> tuple:
                 getTitleUrl = nlink
                 titleUrl_ = requests.get(getTitleUrl, headers={'User-Agent':'Mozilla/5.0'})
                 if titleUrl_.encoding == 'ISO-8859-1':
-                    titleUrl_.encoding='UTF-8'
+                    titleUrl_.encoding=None
                 titleUrl = BeautifulSoup(titleUrl_.text, "html.parser")
                 title = titleUrl.find('meta',property='og:title')['content']
             except:
