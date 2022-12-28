@@ -123,7 +123,7 @@ def crawl(searchKeyword, dateStart, sort, self):
         try:
             checkNextPage = html.select_one('a.btn_next')["aria-disabled"]
         except TypeError:
-            print('관련 기사가 존재하지 않습니다')
+            print('다음 페이지가 없습니다')
             self.label_main.setText("Not Found")
             self.label_main.setStyleSheet("Color: Red")
             break
