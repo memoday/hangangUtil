@@ -1,15 +1,24 @@
 import time
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
+import chromedriver_autoinstaller
+import os
 
 options = webdriver.ChromeOptions()
 options.add_argument('User-Agent= Mozilla/5.0')
 options.add_argument('headless') #크롬창 표시 금지
 
 
-driver = webdriver.Chrome(options=options, service=Service(ChromeDriverManager().install()))
+chrome_ver = chromedriver_autoinstaller.get_chrome_version().split('.')[0]
+driver_path = f'./{chrome_ver}/chromedriver.exe'
+if os.path.exists(driver_path):
+    print(f"chromedriver is installed: {driver_path}")
+else:
+    print('installing chromedriver')
+    chromedriver_autoinstaller.install(cwd=True) #chromedriver 크롬 버전에 맞춰 설치
+
+    
+driver = webdriver.Chrome(options=options, executable_path=driver_path)
 driver.get("https://han.gl")
 
 
