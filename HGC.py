@@ -293,6 +293,9 @@ class WindowClass(QMainWindow, form_class):
         x = Thread1(self)
         x.start()
 
+    def closeEvent(self, event):
+        sys.exit(0)
+
     def exit(self):
         sys.exit(0)
 
