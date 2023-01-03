@@ -134,6 +134,8 @@ def crawl(searchKeyword, dateStart, sort, self):
             for articleIndex in range(10):
                 attribute = getAttribute(articleIndex)
                 title, source, sum, nlink = getContents(articleIndex)
+                if sum[0] == '=':
+                    sum = sum[1:] #엑셀 수식 오류 방지(요약에서 =로 시작하는 경우가 종종 있음)
 
                 data = [setting['dateStart'], source, title, attribute, sum, nlink]
                 # print(attribute, '\n', source, '\n', title, '\n\n', sum, '\n', nlink, '\n')
