@@ -79,7 +79,7 @@ def getContents(articleIndex) -> tuple:
 
     return title, source, sum, nlink
 
-def fileCreate(searchKeyword, sort,fileNameDays,self):
+def fileCreate(searchKeyword, sort,fileNameDays):
 
     global wb, ws1, fileName
 
@@ -263,8 +263,6 @@ class Thread1(QThread):
         if self.parent.check_autoShutdown.isChecked() == True:
             time.sleep(2)
             sys.exit(0)
-        
-
 
 class WindowClass(QMainWindow, form_class):
 
