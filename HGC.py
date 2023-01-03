@@ -79,7 +79,7 @@ def getContents(articleIndex) -> tuple:
 
     return title, source, sum, nlink
 
-def fileCreate(searchKeyword, sort,fileNameDays):
+def fileCreate(searchKeyword, sort,fileNameDays,self):
 
     global wb, ws1, fileName
 
