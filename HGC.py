@@ -12,7 +12,7 @@ from openpyxl.styles import Alignment
 from openpyxl.styles.borders import Border, Side
 import time
 
-__version__ = 'v1.3.2'
+__version__ = 'v1.3.3'
 
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -207,7 +207,7 @@ class Thread1(QThread):
             self.parent.label_main.setText("Date Error")
             self.parent.label_main.setStyleSheet("Color: Red")
             return
-        if searchKeyword is '':
+        if searchKeyword == '':
             print('검색어를 입력해주세요')
         else:
             dateStart = self.parent.dateStart.date().toString('yyyy.MM.dd')
