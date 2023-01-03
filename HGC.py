@@ -225,7 +225,6 @@ class Thread1(QThread):
 
             sort = str(self.parent.combo_sort.currentIndex()) #combo box안에 있는 값 전달
 
-            fileCreate(searchKeyword,sort,fileNameDays,self.parent)
             file = fileCreate(searchKeyword,sort,fileNameDays,self.parent)
 
             if file == 'exists':
@@ -277,7 +276,7 @@ class WindowClass(QMainWindow, form_class):
         self.setWindowTitle('HGC '+__version__)
         self.statusBar().showMessage('프로그램 정상 구동 중')
         self.check_excelStyle.toggle()
-        self.check_autoShutdown.toggle()
+        # self.check_autoShutdown.toggle()
 
         #실행 후 기본값 설정
         yesterdayDate = QDate(ty,tm,td-1)
