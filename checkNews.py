@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 import re
 from datetime import datetime
 from urllib.parse import urlparse
+import html
 
 def get_real_url_from_shortlink(url): #단축링크 원본링크로 변경
     resp = requests.get(url,headers={'User-Agent':'Mozilla/5.0'})
@@ -162,5 +163,7 @@ def checkNews(url) -> tuple : #언론사별 selector
 
         except:
             date = ''
-    
+
+    contentEdited = html.unescape(contentEdited) #&lt;(<) &gt;(>) 정상적으로 다시 변환시킴
+
     return title,press,contentEdited,date
