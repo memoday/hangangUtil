@@ -95,6 +95,7 @@ def checkNews(url) -> tuple : #언론사별 selector
             'www.ilyosisa.co.kr' : '일요시사',
             'www.skyedaily.com' : '스카이데일리',
             'idsn.co.kr' : '매일안전신문',
+            'www.siminilbo.co.kr' : '시민일보',
         } 
 
         try:
@@ -134,6 +135,8 @@ def checkNews(url) -> tuple : #언론사별 selector
                 press = 'Queen'
             elif '푸드경제신문'  in press:
                 press = '푸드경제신문'
+            elif 'ktv.go.kr' in press:
+                press = 'KTV국민방송'
 
 
         except: #meta값을 찾지 못했을 때 pressSetting 딕셔너리를 통해 언론사 이름을 불러옴
