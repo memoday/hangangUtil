@@ -94,7 +94,7 @@ class WindowClass(QMainWindow, form_class) :
                 self.output.append('<span style="font-size: 21pt; color: #0000ff; font-weight: bold; font-family: 돋움">'+title+'</span>')
                 self.output.setAlignment(Qt.AlignRight)
                 self.output.append('<span style="font-size: 12pt; color: #3c3e40; font-weight: bold; font-family: 돋움">'+sub+'</span>')
-                self.output.setAlignment(Qt.AlignHCenter )
+                self.output.setAlignment(Qt.AlignJustify)
                 self.output.append(content)
                 self.output_2.setText(output_2)
                 print(self.output.toPlainText())
