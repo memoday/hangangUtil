@@ -94,6 +94,7 @@ def checkNews(url) -> tuple : #언론사별 selector
             'www.sisa-news.com' : '시사뉴스',
             'www.ilyosisa.co.kr' : '일요시사',
             'www.skyedaily.com' : '스카이데일리',
+            'skyedaily.com' : '스카이데일리',
             'idsn.co.kr' : '매일안전신문',
             'www.siminilbo.co.kr' : '시민일보',
         } 
@@ -166,6 +167,7 @@ def checkNews(url) -> tuple : #언론사별 selector
 
         except:
             date = ''
+            print('published_time meta값을 찾을 수 없습니다')
 
     contentEdited = html.unescape(contentEdited) #&lt;(<) &gt;(>) 정상적으로 다시 변환시킴
 
