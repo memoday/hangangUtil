@@ -7,8 +7,9 @@ import hanglShorten as hgs
 import os
 import checkNews as cn
 import webbrowser
+from PyQt5.QtCore import Qt
 
-__version__ = 'v1.3.2'
+__version__ = 'v1.3.3'
 
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -84,12 +85,20 @@ class WindowClass(QMainWindow, form_class) :
 
                 print(title+"\n"+press+" "+date+"\n"+content)
                 output = title+"\n"+press+" "+date+"\n"+content
+                sub = "\n"+press+" "+date+"\n"
                 output_2 = title+"\n"+hgs.hanglShorten(url) #단축된 링크로 제공
 
-                self.output.setText(output)
+                # self.output.setText(output)
+                self.output.setText(' ')
+                self.output.setAlignment(Qt.AlignCenter)
+                self.output.append('<span style="font-size: 21pt; color: #0000ff; font-weight: bold; font-family: 돋움">'+title+'</span>')
+                self.output.setAlignment(Qt.AlignRight)
+                self.output.append('<span style="font-size: 12pt; color: #3c3e40; font-weight: bold; font-family: 돋움">'+sub+'</span>')
+                self.output.setAlignment(Qt.AlignHCenter )
+                self.output.append(content)
                 self.output_2.setText(output_2)
                 print(self.output.toPlainText())
-                
+
             except AttributeError:
                 print(AttributeError)
                 self.output.setText("호환하지 않는 링크입니다.")
