@@ -24,10 +24,6 @@ icon = resource_path('assets/HGM.ico')
 form_class = uic.loadUiType(form)[0]
 print('프로그램이 구동됩니다.')
 
-now = datetime.datetime.now()
-today = (now.date()).strftime('%Y.%m.%d')
-ty, tm ,td = (map(int,today.split('.')))
-
 def getRange(ds,de):
 
     dsY,dsM,dsD = map(int,ds.split('.'))
@@ -287,10 +283,10 @@ class WindowClass(QMainWindow, form_class):
         # self.check_autoShutdown.toggle()
 
         #실행 후 기본값 설정
-        yesterdayDate = QDate(ty,tm,td-1)
-        todayDate = QDate(ty,tm,td)
-        self.dateStart.setDate(yesterdayDate)
-        self.dateEnd.setDate(todayDate)
+        self.dateEnd.setDate(QDate.currentDate())
+        self.dateStart.setDate(self.dateEnd.date().addDays(-1))
+        self.dateStart.calendarWidget().setGridVisible(True)
+        self.dateEnd.calendarWidget().setGridVisible(True)
 
         #버튼 기능
         self.btn_start.clicked.connect(self.main)
