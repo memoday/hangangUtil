@@ -12,7 +12,7 @@ from openpyxl.styles import Alignment
 from openpyxl.styles.borders import Border, Side
 import time
 
-__version__ = 'v1.3.3'
+__version__ = 'v1.3.4'
 
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -49,12 +49,15 @@ def getAttribute(articleIndex):
     else:
         return "인터넷"
 
-def getContents(articleIndex) -> tuple:
+def getContents(articleIndex,attribute) -> tuple:
     title = articles[articleIndex].select_one("a.news_tit").text
     source = articles[articleIndex].select_one("a.info.press").text.replace("언론사 선정","") #언론사 PICK태그에 #text '언론사 선정' 제거
     sum = articles[articleIndex].select_one("a.api_txt_lines.dsc_txt_wrap").text
     try:
-        nlink = articles[articleIndex].select_one("div.news_info > div.info_group > a:nth-child(3)")["href"]
+        if attribute == "신문":
+            nlink = articles[articleIndex].select_one("div.news_info > div.info_group > a:nth-child(4)")["href"]
+        else:
+            nlink = articles[articleIndex].select_one("div.news_info > div.info_group > a:nth-child(3)")["href"]
         if title[-3:] == '...': #제목이 길어 뒷부분이 생략되는 경우 meta값을 불러옴
             try:
                 getTitleUrl = nlink
@@ -117,6 +120,7 @@ def crawl(searchKeyword, dateStart, sort, self):
     while True:
         newsURL = "https://search.naver.com/search.naver?where=news&query="+setting['searchKeyword']+"&sm=tab_opt&sort="+setting['sort']+"&photo=0&field=0&pd="+setting['period']+"&ds="+setting['dateStart']+"&de="+setting['dateEnd']+"&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=1&start="+str(page)+"1"
 
+        print(newsURL)
         raw = requests.get(newsURL, headers={'User-Agent':'Mozilla/5.0'})
         html = BeautifulSoup(raw.text, "html.parser")
 
@@ -133,9 +137,13 @@ def crawl(searchKeyword, dateStart, sort, self):
         try: 
             for articleIndex in range(10):
                 attribute = getAttribute(articleIndex)
-                title, source, sum, nlink = getContents(articleIndex)
-                if sum[0] == '=':
-                    sum = sum[1:] #엑셀 수식 오류 방지(요약에서 =로 시작하는 경우가 종종 있음)
+                title, source, sum, nlink = getContents(articleIndex, attribute)
+                try:
+                    if sum[0] == '=':
+                        sum = sum[1:] #엑셀 수식 오류 방지(요약에서 =로 시작하는 경우가 종종 있음)
+                except:
+                    print('sum이 비어있습니다.')
+                    pass
 
                 data = [setting['dateStart'], source, title, attribute, sum, nlink]
                 # print(attribute, '\n', source, '\n', title, '\n\n', sum, '\n', nlink, '\n')
