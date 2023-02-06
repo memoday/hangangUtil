@@ -97,6 +97,10 @@ def checkNews(url) -> tuple : #언론사별 selector
             'skyedaily.com' : '스카이데일리',
             'idsn.co.kr' : '매일안전신문',
             'www.siminilbo.co.kr' : '시민일보',
+            'www.wsobi.com' : '여성소비자신문',
+            'realty.chosum.com' : '땅집고',
+            'www.the-pr.co.kr' : 'The PR Time',
+            'www.vegannews.co.kr' : '비건뉴스',
         } 
 
         try:
