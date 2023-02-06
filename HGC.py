@@ -116,7 +116,6 @@ def crawl(searchKeyword, dateStart, sort, self):
     while True:
         newsURL = "https://search.naver.com/search.naver?where=news&query="+setting['searchKeyword']+"&sm=tab_opt&sort="+setting['sort']+"&photo=0&field=0&pd="+setting['period']+"&ds="+setting['dateStart']+"&de="+setting['dateEnd']+"&docid=&related=0&mynews=0&office_type=0&office_section_code=0&news_office_checked=&nso=so%3Add%2Cp%3Aall&is_sug_officeid=1&start="+str(page)+"1"
 
-        print(newsURL)
         raw = requests.get(newsURL, headers={'User-Agent':'Mozilla/5.0'})
         html = BeautifulSoup(raw.text, "html.parser")
 
