@@ -12,7 +12,7 @@ from openpyxl.styles import Alignment
 from openpyxl.styles.borders import Border, Side
 import time
 
-__version__ = 'v1.3.4'
+__version__ = 'v1.3.5'
 
 def resource_path(relative_path):
     base_path = getattr(sys, '_MEIPASS', os.path.dirname(os.path.abspath(__file__)))
@@ -47,7 +47,10 @@ def getAttribute(articleIndex):
 
 def getContents(articleIndex,attribute) -> tuple:
     title = articles[articleIndex].select_one("a.news_tit").text
-    source = articles[articleIndex].select_one("a.info.press").text.replace("언론사 선정","") #언론사 PICK태그에 #text '언론사 선정' 제거
+    try:
+        source = articles[articleIndex].select_one("a.info.press").text.replace("언론사 선정","") #언론사 PICK태그에 #text '언론사 선정' 제거
+    except:
+        source = ''
     sum = articles[articleIndex].select_one("a.api_txt_lines.dsc_txt_wrap").text
     try:
         if attribute == "신문":
